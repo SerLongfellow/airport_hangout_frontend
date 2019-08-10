@@ -1,2 +1,8 @@
 
-<h1>Lounges</h1>
+<h2><%= @lounge.name %></h2>
+<p>Current Patrons: <%= @lounge.number_of_patrons %></p>
+
+<h3>Airport</h3>
+<p><%= @lounge.airport.name %></p>
+<p><%= @lounge.airport.code %></p>
+

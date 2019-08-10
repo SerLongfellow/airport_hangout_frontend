@@ -1,2 +1,16 @@
 
 <h1>Lounges Index</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Airport</th>
+  </tr>
+
+  <% @lounges.each do |lounge| %>
+  <tr>
+    <td><%= link_to(lounge.name, lounge_path(lounge.id)) %></td>
+    <td><%= lounge.airport.code %></td>
+  </tr>
+  <% end %>
+</table>
