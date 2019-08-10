@@ -10,4 +10,8 @@ class PatronsController < ApplicationController
   def index()
     @patrons = @repository.fetch_many(params[:lounge_id])
   end
+  
+  def create()
+    @repository.check_into_lounge(params[:lounge_id], 7) # want to get session user Id here...
+  end
 end

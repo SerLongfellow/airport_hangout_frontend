@@ -3,13 +3,19 @@
 <p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
 
+<%= link_to("Check in!", lounge_patrons_path(@lounge.id), method: :post, remote: true) %>
+
 <script type="text/javascript">
   function getPatrons() {
     $.ajax({
       type: "get",
       url: "<%= lounge_patrons_path(@lounge.id) %>",
+      dataType: "html",
       success: function(data) {
         $("#patrons_list").html(data);
+      },
+      error: function(data) {
+        $("#patrons_list").html("<p>Failure fetching patrons!</p>");
       }
     });
   }
