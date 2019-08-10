@@ -23,13 +23,13 @@ class MemoryLoungesRepository < LoungesRepository
 
     airport = Airport.new(1, "SEA", "Seattle-Tacoma International Airport")
     
-    lounge = Lounge.new(1, "Cool-Ass Playas Lounge", airport)
+    lounge = Lounge.new(1, "Cool-Ass Playas Lounge", airport, description="Where all the cool kids come to play...", number_of_patrons=2)
     @lounge_list.push(lounge)
 
-    lounge = Lounge.new(2, "I Want My IPA Lounge", airport)
+    lounge = Lounge.new(2, "I Want My IPA Lounge", airport, description="Over 9,000 IBU's!")
     @lounge_list.push(lounge)
     
-    lounge = Lounge.new(3, "Delta Premium Lounge", airport)
+    lounge = Lounge.new(3, "Delta Premium Lounge", airport, description="We're Delta...")
     @lounge_list.push(lounge)
   end
 

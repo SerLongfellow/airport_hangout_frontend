@@ -1,0 +1,7 @@
+<ul>
+<% @patrons.each do |patron| %>
+  <li>
+    <%= patron.name + " - " + patron.hometown %>
+  </li>
+<% end %>
+</ul>

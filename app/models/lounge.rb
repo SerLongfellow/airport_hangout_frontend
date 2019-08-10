@@ -1,8 +1,9 @@
 class Lounge 
-  def initialize(id, name, airport, number_of_patrons=0)
+  def initialize(id, name, airport, description="", number_of_patrons=0)
     @id = id
     @name = name
     @airport = airport
+    @description = description
     @number_of_patrons = number_of_patrons
   end
 
@@ -16,6 +17,10 @@ class Lounge
 
   def airport()
     @airport
+  end
+  
+  def description()
+    @description
   end
 
   def number_of_patrons()

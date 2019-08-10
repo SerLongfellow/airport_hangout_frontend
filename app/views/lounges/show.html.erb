@@ -1,6 +1,29 @@
 
 <h2><%= @lounge.name %></h2>
+<p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
+
+<script type="text/javascript">
+  function getPatrons() {
+    $.ajax({
+      type: "get",
+      url: "<%= lounge_patrons_path(@lounge.id) %>",
+      success: function(data) {
+        $("#patrons_list").html(data);
+      }
+    });
+  }
+</script>
+
+<h3>Patrons</h3>
+<a href="#" onclick="getPatrons()">Refresh List</a>
+<div id="patrons_list"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    getPatrons();
+  });
+</script>
 
 <h3>Airport</h3>
 <p><%= @lounge.airport.name %></p>

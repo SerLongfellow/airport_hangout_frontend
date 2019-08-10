@@ -4,6 +4,7 @@ require 'repositories/lounges/lounges_repository'
 
 class LoungesController < ApplicationController
   def initialize(repository_class=MemoryLoungesRepository)
+    super()
     @repository = repository_class.new
   end
 
