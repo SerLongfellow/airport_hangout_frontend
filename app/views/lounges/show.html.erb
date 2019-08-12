@@ -3,13 +3,25 @@
 <p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
 
-<%= link_to("Check in!", lounge_patrons_path(@lounge.id), method: :post, remote: true) %>
+<% if @user.current_lounge.nil? %>
+
+  <p><%= link_to("Check in!", airport_lounge_patrons_path(@lounge.airport.id, @lounge.id), method: :post) %></p>
+
+<% elsif @lounge.id == @user.current_lounge.id %>
+
+  <p>You're currently checked into this lounge! Meet some friends!</p>
+  <p><%= link_to("Check out", airport_lounge_patron_path(@lounge.airport.id, @lounge.id, @user.id), method: :delete) %></p>
+
+<% else %>
+
+  <p>You're currently checked into <%= @user.current_lounge.name %>. <%= link_to("Click here", airport_lounge_patrons_path(@lounge.airport.id, @lounge.id), method: :post) %> to leave and check into this lounge.</p>
+<% end %>
 
 <script type="text/javascript">
   function getPatrons() {
     $.ajax({
       type: "get",
-      url: "<%= lounge_patrons_path(@lounge.id) %>",
+      url: "<%= airport_lounge_patrons_path(@lounge.airport.id, @lounge.id) %>",
       dataType: "html",
       success: function(data) {
         $("#patrons_list").html(data);

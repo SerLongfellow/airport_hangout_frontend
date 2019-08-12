@@ -5,6 +5,10 @@ class Patron
     @hometown = hometown 
   end
 
+  def to_s()
+    return "#{id}) #{name} from #{hometown}"
+  end
+
   def id()
     @id
   end

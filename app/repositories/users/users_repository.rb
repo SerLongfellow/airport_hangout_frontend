@@ -34,7 +34,6 @@ class MemoryUsersRepository < UsersRepository
     else
       puts "Creating new user..."
       user = User.new(user_id, "Jeff Long", "Maynard, AR")
-#      user = User.new(user_id)
       @@users[user_id] = user
       return user
     end

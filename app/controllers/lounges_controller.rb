@@ -1,19 +1,23 @@
 
 require 'repositories/lounges/lounges_repository'
+require 'repositories/users/users_repository'
 
 
 class LoungesController < ApplicationController
-  def initialize(repository_class=MemoryLoungesRepository)
+  def initialize(lounges_repo_class=MemoryLoungesRepository,
+                 users_repo_class=MemoryUsersRepository)
     super()
-    @repository = repository_class.new
+    @lounges_repo = lounges_repo_class.new
+    @users_repo = users_repo_class.new
   end
 
   def index()
-    @lounges = @repository.fetch_many()
+    @lounges = @lounges_repo.fetch_many(params[:airport_id])
   end
 
   def show()
-    @lounge = @repository.fetch_by_id(params[:id])
+    @lounge = @lounges_repo.fetch_by_id(params[:airport_id], params[:id])
+    @user = @users_repo.fetch_user(session[:current_user_id])
 
     if @lounge.nil?
       render :file => "#{Rails.root}/public/404.html", :status => 404

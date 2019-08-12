@@ -1,5 +1,6 @@
 
 require 'repositories/users/users_repository'
+require 'repositories/airports/airports_repository'
 
 
 class HomeController < ApplicationController

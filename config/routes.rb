@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   
   resources :sessions, only: [:new, :create]
 
-  resources :lounges do
-    resources :patrons, only: [:index, :create, :delete]
+  resources :airports, only: [:index] do
+    resources :lounges, only: [:index, :show] do
+      resources :patrons, only: [:index, :create, :destroy]
+    end
   end
 
   root 'home#index'

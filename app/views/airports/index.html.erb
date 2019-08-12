@@ -1,0 +1,14 @@
+
+<h2>Airport Selection</h2>
+
+<p>
+<%= collection_select(:selected_airport, :id, @airports, :id, :name, {:selected => @selected_airport.id}) %>
+</p>
+
+<p><button id="view_lounges_button" name="view_lounges_button" type="button">View lounges</button></p>
+
+<script type="text/javascript">
+  $('#view_lounges_button').click(function() {
+    window.location.href = '/airports/' + $('#selected_airport_id').val() + '/lounges';
+  });
+</script>

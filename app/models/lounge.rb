@@ -7,6 +7,10 @@ class Lounge
     @number_of_patrons = number_of_patrons
   end
 
+  def to_s()
+    return "#{id}) #{name}, #{number_of_patrons} patrons"
+  end
+
   def id()
     @id
   end
@@ -25,5 +29,9 @@ class Lounge
 
   def number_of_patrons()
     @number_of_patrons
+  end
+  
+  def number_of_patrons=(n)
+    @number_of_patrons = n
   end
 end
