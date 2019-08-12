@@ -1,6 +1,8 @@
 
 <h2>Airport Selection</h2>
 
+<p><%= link_to("Back to Home...", root_path) %></p>
+
 <p>
 <%= collection_select(:selected_airport, :id, @airports, :id, :name, {:selected => @selected_airport.id}) %>
 </p>

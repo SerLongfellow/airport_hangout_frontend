@@ -1,5 +1,8 @@
 
 <h2><%= @lounge.name %></h2>
+
+<p><%= link_to("Back to Lounges...", airport_lounges_path) %></p>
+
 <p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
 
