@@ -1,18 +1,14 @@
 
-class LoungesRepository
+require 'repositories/application_repository'
+
+
+class LoungesRepository < ApplicationRepository
   def fetch_many()
     raise NoMethodError.new(not_implemented_error)
   end
   
   def fetch_by_id(id)
     raise NoMethodError.new(not_implemented_error)
-  end
-
-  private
-
-  def not_implemented_error()
-    caller_method = caller_locations.first.label
-    return "'#{caller_method}' method must be implemented"
   end
 end
 

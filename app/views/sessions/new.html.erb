@@ -1,0 +1,8 @@
+
+<h1>New Session, Cool!</h1>
+
+<%= form_tag(sessions_path, method: 'post') do %>
+  <%= label_tag(:user_id, "Enter a user ID:") %>
+  <%= text_field_tag(:user_id) %>
+  <%= submit_tag("Go") %>
+<% end %>

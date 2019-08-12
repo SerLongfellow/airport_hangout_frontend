@@ -1,5 +1,14 @@
 
 <h1>Welcome to Airport Hangout!</h1>
 
-<%= link_to("View Lounges", lounges_path) %>
+<p>Hello, user <%= @user.id %> from <%= @user.hometown %>!</p>
+
+<% if @user.current_lounge.nil? %>
+  <p>You are not currently checked into any lounge... <%= link_to("view lounges here!", lounges_path) %></p>
+<% else %>
+  <p>You are currently checked into <%= @user.current_lounge.name %>! Hope you're enjoying it!</p>
+  <p><%= link_to("View other lounges here!", lounges_path) %></p>
+<% end %>
+
+
 
