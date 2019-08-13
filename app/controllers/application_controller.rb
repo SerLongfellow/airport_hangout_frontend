@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404(e)
-    #puts e
+    logger.warn("Rendering 404 error! -> " + e.to_s())
     render :file => "#{Rails.root}/public/404.html", :status => 404
   end
 
