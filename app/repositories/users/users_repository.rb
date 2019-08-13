@@ -32,7 +32,6 @@ class MemoryUsersRepository < UsersRepository
     if @@users.key?(user_id)
       return @@users[user_id]
     else
-      puts "Creating new user..."
       user = User.new(user_id, "Jeff Long", "Maynard, AR")
       @@users[user_id] = user
       return user
