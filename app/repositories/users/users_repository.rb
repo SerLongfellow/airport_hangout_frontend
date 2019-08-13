@@ -19,24 +19,26 @@ class MemoryUsersRepository < UsersRepository
   
   def initialize()
     super()
-
-    if @@initialized
-      return
-    end
+    return if @@initialized
 
     @@users = {}
     @@initialized = true
   end
 
   def fetch_user(user_id)
+    user_id = user_id.to_s()
+
     if @@users.key?(user_id)
       return @@users[user_id]
     else
-      user = User.new(user_id, "Jeff Long", "Maynard, AR")
-      @@users[user_id] = user
-      return user
+      raise RepositoryErrors::NotFoundError.new("No user found with ID " + user_id.to_s())
     end
-
+  end
+  
+  def create_user(user)
+    user.id = rand(5..1024).to_s()  # gen ID
+    @@users[user.id] = user
+    return user
   end
   
   def check_into_lounge(lounge, user)

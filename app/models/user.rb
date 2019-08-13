@@ -1,6 +1,6 @@
 class User
-  attr_reader :id, :name, :hometown
-  attr_accessor :current_lounge
+  attr_reader :name, :hometown
+  attr_accessor :id, :current_lounge
 
   def initialize(id, name, hometown, current_lounge=nil)
     @id = id

@@ -1,6 +1,5 @@
 
 module RepositoryErrors
-
     class NotFoundError < StandardError
 
     end

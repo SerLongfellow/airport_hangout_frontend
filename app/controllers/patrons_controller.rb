@@ -22,9 +22,7 @@ class PatronsController < ApplicationController
     lounge = @lounges_repo.fetch_by_id(params[:airport_id], params[:lounge_id])
     user = @users_repo.fetch_user(session[:current_user_id])
 
-    unless user.current_lounge.nil?
-      @patrons_repo.leave_lounge(user.current_lounge.airport.id, user.current_lounge.id, user)
-    end
+    @patrons_repo.leave_lounge(user.current_lounge.airport.id, user.current_lounge.id, user) unless user.current_lounge.nil?
 
     user = @users_repo.check_into_lounge(lounge, user)
     @patrons_repo.check_into_lounge(lounge.airport.id, lounge.id, user)
@@ -34,7 +32,11 @@ class PatronsController < ApplicationController
 
   def destroy()
     lounge = @lounges_repo.fetch_by_id(params[:airport_id], params[:lounge_id])
-    user = @users_repo.fetch_user(session[:current_user_id])
+    user = @users_repo.fetch_user(params[:id])
+
+    if params[:id] != session[:current_user_id]
+      render_403() and return
+    end
    
     @patrons_repo.leave_lounge(lounge.airport.id, lounge.id, user)
     @users_repo.check_into_lounge(nil, user)
