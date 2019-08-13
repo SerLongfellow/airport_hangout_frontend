@@ -1,4 +1,7 @@
 class Lounge 
+  attr_reader :id, :name, :airport, :description
+  attr_accessor :number_of_patrons
+
   def initialize(id, name, airport, description="", number_of_patrons=0)
     @id = id
     @name = name
@@ -11,27 +14,4 @@ class Lounge
     return "#{id}) #{name}, #{number_of_patrons} patrons"
   end
 
-  def id()
-    @id
-  end
-
-  def name()
-    @name
-  end
-
-  def airport()
-    @airport
-  end
-  
-  def description()
-    @description
-  end
-
-  def number_of_patrons()
-    @number_of_patrons
-  end
-  
-  def number_of_patrons=(n)
-    @number_of_patrons = n
-  end
 end
