@@ -26,8 +26,8 @@ class MemoryPatronsRepository < PatronsRepository
     @@lounge_patrons = []
 
     patrons_list = []
-    patrons_list.push(Patron.new(1, "Billy Bob", "Little Rock, AR"))
-    patrons_list.push(Patron.new(2, "Foo Bar", "Seattle, WA"))
+    patrons_list.push(Patron.new(1, "Billy Bob", "Little Rock, AR", status="Watching Monster Jam! Yeehaw!"))
+    patrons_list.push(Patron.new(2, "Foo Bar", "Seattle, WA", status="Enjoying some beers - come chat!"))
     @@lounge_patrons.push(patrons_list)
 
     patrons_list = []

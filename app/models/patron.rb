@@ -1,7 +1,7 @@
 class Patron
   attr_reader :id, :name, :hometown, :status
 
-  def initialize(id, name, hometown, status="")
+  def initialize(id, name, hometown, status="No status provided...")
     @id = id
     @name = name
     @hometown = hometown 
