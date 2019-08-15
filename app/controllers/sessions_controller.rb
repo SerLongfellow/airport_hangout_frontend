@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
     user = @users_repo.create_user(user)
     
     session[:current_user_id] = user.id
+    cookies.encrypted[:current_user_id] = user.id
     
     redirect_to :controller => 'home', :action => 'index'
   end
