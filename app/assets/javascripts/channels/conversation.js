@@ -18,8 +18,6 @@ App.chat = App.cable.subscriptions.create("ConversationChannel", {
   },
 
   broadcast: function(data) {
-    console.log("Broadcasting data...");
-
     this.perform("broadcast", {"data": data});
   }
 });
