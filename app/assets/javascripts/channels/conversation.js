@@ -1,4 +1,4 @@
-App.chat = App.cable.subscriptions.create("ChatChannel", {
+App.chat = App.cable.subscriptions.create("ConversationChannel", {
   connected: function() {
     // Called when the subscription is ready for use on the server
     console.log("We're connected!");
@@ -10,8 +10,11 @@ App.chat = App.cable.subscriptions.create("ChatChannel", {
   },
 
   received: function(data) {
-    // Called when there's incoming data on the websocket for this channel
-    console.log("We got a message! " + data);
+    console.log("Got message: " + data["message"]);
+    $(document).ready(function() {
+      $("#messages").append(data["message"]);
+    });
+
   },
 
   broadcast: function(data) {

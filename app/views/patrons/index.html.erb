@@ -4,7 +4,7 @@
     <div>
       <p><%= patron.name + " (" + patron.hometown + ")" %></p>
       <p><i><%= patron.status %></i></p>
-      <p><%= link_to("Send Message", root_path) %></p>
+      <p><%= link_to("Send Message", conversation_path(patron.id)) %></p>
     </div>
   </li>
 <% end %>

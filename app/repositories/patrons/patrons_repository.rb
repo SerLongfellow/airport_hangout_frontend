@@ -7,6 +7,10 @@ class PatronsRepository < ApplicationRepository
   def fetch_many(lounge_id, current_patron_id)
     raise NoMethodError.new(not_implemented_error())
   end
+  
+  def fetch_by_id(patron_id)
+    raise NoMethodError.new(not_implemented_error())
+  end
 
   def check_into_lounge(lounge_id, patron_id)
     raise NoMethodError.new(not_implemented_error())
@@ -26,8 +30,8 @@ class MemoryPatronsRepository < PatronsRepository
     @@lounge_patrons = []
 
     patrons_list = []
-    patrons_list.push(Patron.new(1, "Billy Bob", "Little Rock, AR", status="Watching Monster Jam! Yeehaw!"))
-    patrons_list.push(Patron.new(2, "Foo Bar", "Seattle, WA", status="Enjoying some beers - come chat!"))
+    patrons_list.push(Patron.new("1", "Billy Bob", "Little Rock, AR", status="Watching Monster Jam! Yeehaw!"))
+    patrons_list.push(Patron.new("2", "Foo Bar", "Seattle, WA", status="Enjoying some beers - come chat!"))
     @@lounge_patrons.push(patrons_list)
 
     patrons_list = []
@@ -45,7 +49,7 @@ class MemoryPatronsRepository < PatronsRepository
     lounge_patrons = @@lounge_patrons[lounge_id.to_i - 1]
     return result if lounge_patrons.nil?
     
-    lounge_patrons.select do |patron|
+    lounge_patrons.each do |patron|
       if patron.id != current_patron_id
         result.push(patron)
       else
@@ -54,6 +58,17 @@ class MemoryPatronsRepository < PatronsRepository
     end
 
     return result
+  end
+
+  def fetch_by_id(patron_id)
+    @@lounge_patrons.each do |lounge|
+      lounge.each do |patron|
+        puts patron
+        return patron if patron.id == patron_id
+      end
+    end
+
+    raise RepositoryErrors::NotFoundError.new("No patron found with ID #{patron_id}")
   end
   
   def check_into_lounge(airport_id, lounge_id, user)
