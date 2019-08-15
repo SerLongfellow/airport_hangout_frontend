@@ -1,0 +1,19 @@
+#!/bin/sh
+# Run tests locally upon commit to not have wait on CI/CD
+
+bin/rails test -f -d
+success=$?
+if [ $success -ne 0 ]
+then
+    exec < /dev/tty
+    read -p "One or more tests failed - do you still want to proceed with this commit? (y/n) " proceed
+    exec <&-
+
+    if test "$proceed" = 'y'
+    then
+        echo "Proceeding with commit! You like to live dangerously..."
+    else
+        echo "Stopping commit!"
+        exit 1
+    fi
+fi
