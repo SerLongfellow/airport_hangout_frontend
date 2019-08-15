@@ -63,7 +63,6 @@ class MemoryPatronsRepository < PatronsRepository
   def fetch_by_id(patron_id)
     @@lounge_patrons.each do |lounge|
       lounge.each do |patron|
-        puts patron
         return patron if patron.id == patron_id
       end
     end

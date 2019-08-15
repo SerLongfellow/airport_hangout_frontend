@@ -1,4 +1,4 @@
-
+require 'application_errors'
 require 'repositories/sessions/sessions_repository'
 
 

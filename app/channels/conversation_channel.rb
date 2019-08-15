@@ -1,7 +1,6 @@
 
 require 'securerandom'
 
-
 class ConversationChannel < ApplicationCable::Channel
   
   def subscribed
