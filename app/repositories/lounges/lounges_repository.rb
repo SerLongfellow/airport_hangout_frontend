@@ -57,16 +57,16 @@ class MemoryLoungesRepository < LoungesRepository
     if @@airports.key?(airport_id)
       return @@airports[airport_id]
     else
-      raise RepositoryErrors::NotFoundError.new("No airport with ID " + airport_id)
+      raise NotFoundError.new("No airport with ID " + airport_id)
     end
   end
   
   def fetch_by_id(airport_id, lounge_id)
     airport = @@airports[airport_id]
-    raise RepositoryErrors::NotFoundError.new("No airport with ID " + airport_id) if airport.nil?
+    raise NotFoundError.new("No airport with ID " + airport_id) if airport.nil?
     
     res = airport.find { |lounge| lounge.id == lounge_id }
-    raise RepositoryErrors::NotFoundError.new("No lounge with ID " + lounge_id) if res.nil?
+    raise NotFoundError.new("No lounge with ID " + lounge_id) if res.nil?
   
     return res
   end

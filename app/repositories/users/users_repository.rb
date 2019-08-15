@@ -31,7 +31,7 @@ class MemoryUsersRepository < UsersRepository
     if @@users.key?(user_id)
       return @@users[user_id]
     else
-      raise RepositoryErrors::NotFoundError.new("No user found with ID " + user_id.to_s())
+      raise NotFoundError.new("No user found with ID " + user_id.to_s())
     end
   end
   

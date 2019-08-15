@@ -1,11 +1,10 @@
 
-require 'repositories/application_repository'
 require 'repositories/sessions/sessions_repository'
 
 
 class ApplicationController < ActionController::Base
   before_action :check_for_session
-  rescue_from RepositoryErrors::NotFoundError, :with => :render_404
+  rescue_from NotFoundError, :with => :render_404
 
   protected
   def render_403()

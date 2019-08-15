@@ -1,0 +1,4 @@
+
+class NotFoundError < StandardError
+
+end
