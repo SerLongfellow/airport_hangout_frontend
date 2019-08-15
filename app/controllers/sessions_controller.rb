@@ -14,7 +14,6 @@ class SessionsController < ApplicationController
   end
 
   def create()
-
     user = User.new("-1", params[:name], params[:hometown])
     user = @users_repo.create_user(user)
     

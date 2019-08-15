@@ -4,6 +4,7 @@ require 'securerandom'
 class ConversationChannel < ApplicationCable::Channel
   
   def subscribed
+    puts "subscribed!"
     stream_from "conversation_channel"
   end
 
@@ -12,7 +13,8 @@ class ConversationChannel < ApplicationCable::Channel
   end
 
   def broadcast(data)
-    message = Message.new(SecureRandom.uuid, data["data"])
+    puts "calling broadcast"
+    message = Message.new(SecureRandom.uuid, data["data"], "0", "")
     rendered = ApplicationController.render(:partial => "conversations/message", :locals => { :message => message })
     ActionCable.server.broadcast("conversation_channel", message: rendered)
   end
