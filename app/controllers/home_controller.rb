@@ -1,11 +1,11 @@
-
-require 'repositories/users/users_repository'
-require 'repositories/airports/airports_repository'
-
+require 'repositories/sessions/sessions_repository'
 
 class HomeController < ApplicationController
+  def initialize(sessions_repo_class=MemorySessionsRepository)
+    @sesssions_repo = sessions_repo_class.new
+  end
+
   def index()
-    users_repository = MemoryUsersRepository.new
-    @user = users_repository.fetch_user(session[:current_user_id])
+    @user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
   end
 end

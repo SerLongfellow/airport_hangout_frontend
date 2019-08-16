@@ -24,18 +24,13 @@ class LoungesControllerTest < ActionDispatch::IntegrationTest
     assert_response :missing
   end
   
-  test "show good airport ID and good lounge ID" do
-    get airport_lounge_path(@good_airport_id, @good_lounge_id)
+  test "show good lounge ID" do
+    get lounge_path(@good_lounge_id)
     assert_response :success
   end
   
-  test "show good airport ID and bad lounge ID" do
-    get airport_lounge_path(@good_airport_id, @bad_lounge_id)
-    assert_response :missing
-  end
-  
-  test "show bad airport ID and bad lounge ID" do
-    get airport_lounge_path(@bad_airport_id, @bad_lounge_id)
+  test "show bad lounge ID" do
+    get lounge_path(@bad_lounge_id)
     assert_response :missing
   end
 end

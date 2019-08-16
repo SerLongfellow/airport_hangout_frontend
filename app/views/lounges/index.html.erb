@@ -10,7 +10,7 @@
 
   <% @lounges.each do |lounge| %>
   <tr>
-    <td><%= link_to(lounge.name, airport_lounge_path(lounge.airport.id, lounge.id)) %></td>
+    <td><%= link_to(lounge.name, lounge_path(lounge.id)) %></td>
   </tr>
   <% end %>
 </table>

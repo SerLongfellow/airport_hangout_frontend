@@ -1,14 +1,12 @@
 
 require 'repositories/lounges/lounges_repository'
-require 'repositories/users/users_repository'
+require 'repositories/sessions/sessions_repository'
 
 
 class LoungesController < ApplicationController
-  def initialize(lounges_repo_class=MemoryLoungesRepository,
-                 users_repo_class=MemoryUsersRepository)
+  def initialize(lounges_repo_class=MemoryLoungesRepository)
     super()
     @lounges_repo = lounges_repo_class.new
-    @users_repo = users_repo_class.new
   end
 
   def index()
@@ -16,7 +14,7 @@ class LoungesController < ApplicationController
   end
 
   def show()
-    @lounge = @lounges_repo.fetch_by_id(params[:airport_id], params[:id])
-    @user = @users_repo.fetch_user(session[:current_user_id])
+    @lounge = @lounges_repo.fetch_by_id(params[:id])
+    @user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
   end
 end

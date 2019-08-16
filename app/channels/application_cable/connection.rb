@@ -1,6 +1,6 @@
 
 require 'errors/application_errors'
-require 'repositories/users/users_repository'
+require 'repositories/sessions/sessions_repository'
 
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
@@ -14,11 +14,11 @@ module ApplicationCable
 
     def find_user
       begin
-        reject_unauthorized_connection if !cookies.key?(:current_user_id)
+        session_id = cookies.encrypted[:session_id]
+        reject_unauthorized_connection if session_id.nil?
         
-        users_repo = MemoryUsersRepository.new
-        user_id = cookies.encrypted[:current_user_id].to_s
-        user = users_repo.fetch_user(user_id)
+        sessions_repo = MemorySessionsRepository.new
+        user = sessions_repo.fetch_by_id(session_id).current_user
         return user
       rescue NotFoundError => e
         reject_unauthorized_connection

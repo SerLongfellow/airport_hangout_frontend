@@ -1,7 +1,5 @@
-
 require 'repositories/application_repository'
 require 'repositories/airports/airports_repository'
-
 
 class LoungesRepository < ApplicationRepository
   def fetch_many()
@@ -27,18 +25,22 @@ class MemoryLoungesRepository < LoungesRepository
     airports_repo = MemoryAirportsRepository.new
 
     @@airports = {}
+    @@lounges = {}
 
     airport = airports_repo.fetch_by_id(1)
     
     lounge_list = []
     lounge = Lounge.new("1", "Cool-Ass Playas Lounge", airport, description="Where all the cool kids come to play...", number_of_patrons=2)
     lounge_list.push(lounge)
+    @@lounges[lounge.id] = lounge
 
     lounge = Lounge.new("2", "I Want My IPA Lounge", airport, description="Over 9,000 IBU's!")
     lounge_list.push(lounge)
+    @@lounges[lounge.id] = lounge
     
     lounge = Lounge.new("3", "Delta Premium Lounge", airport, description="We're Delta...")
     lounge_list.push(lounge)
+    @@lounges[lounge.id] = lounge
 
     @@airports["1"] = lounge_list
 
@@ -47,6 +49,7 @@ class MemoryLoungesRepository < LoungesRepository
     lounge_list = []
     lounge = Lounge.new("4", "Whole Hog Barbeque", airport, description="Getcha some grub!")
     lounge_list.push(lounge)
+    @@lounges[lounge.id] = lounge
     
     @@airports["2"] = lounge_list
 
@@ -61,24 +64,21 @@ class MemoryLoungesRepository < LoungesRepository
     end
   end
   
-  def fetch_by_id(airport_id, lounge_id)
-    airport = @@airports[airport_id]
-    raise NotFoundError.new("No airport with ID " + airport_id) if airport.nil?
-    
-    res = airport.find { |lounge| lounge.id == lounge_id }
+  def fetch_by_id(lounge_id)
+    res = @@lounges[lounge_id]
     raise NotFoundError.new("No lounge with ID " + lounge_id) if res.nil?
   
     return res
   end
   
-  def update_patron_count(airport_id, lounge_id, inc)
-    lounge = fetch_by_id(airport_id, lounge_id)
+  def update_patron_count(lounge_id, inc)
+    lounge = fetch_by_id(lounge_id)
 
     if lounge.nil?
       return false
     end
 
     lounge.number_of_patrons += inc
-    return true
+    return lounge
   end
 end

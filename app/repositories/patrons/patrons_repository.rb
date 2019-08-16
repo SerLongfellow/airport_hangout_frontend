@@ -4,7 +4,7 @@ require 'repositories/lounges/lounges_repository'
 
 
 class PatronsRepository < ApplicationRepository
-  def fetch_many(lounge_id, current_patron_id)
+  def fetch_many(lounge_id, current_user_id)
     raise NoMethodError.new(not_implemented_error())
   end
   
@@ -12,7 +12,7 @@ class PatronsRepository < ApplicationRepository
     raise NoMethodError.new(not_implemented_error())
   end
 
-  def check_into_lounge(lounge_id, patron_id)
+  def check_into_lounge(lounge_id, current_user_id)
     raise NoMethodError.new(not_implemented_error())
   end
 
@@ -43,17 +43,15 @@ class MemoryPatronsRepository < PatronsRepository
     @@initialized = true
   end
 
-  def fetch_many(lounge_id, current_patron_id)
+  def fetch_many(lounge_id, current_user_id)
     result = []
     
     lounge_patrons = @@lounge_patrons[lounge_id.to_i - 1]
     return result if lounge_patrons.nil?
     
     lounge_patrons.each do |patron|
-      if patron.id != current_patron_id
+      if patron.id != current_user_id
         result.push(patron)
-      else
-        result.push(Patron.new(patron.id, "You", patron.hometown))
       end
     end
 
@@ -70,13 +68,13 @@ class MemoryPatronsRepository < PatronsRepository
     raise RepositoryErrors::NotFoundError.new("No patron found with ID #{patron_id}")
   end
   
-  def check_into_lounge(airport_id, lounge_id, user)
+  def check_into_lounge(lounge_id, user)
     lounge_patrons = fetch_many(lounge_id, user.id)
 
     if !lounge_patrons.nil?
       lounge_patrons.push(Patron.new(user.id, user.name, user.hometown))
 
-      @lounge_repo.update_patron_count(airport_id, lounge_id, 1)
+      @lounge_repo.update_patron_count(lounge_id, 1)
       @@lounge_patrons[lounge_id.to_i - 1] = lounge_patrons
 
       return true
@@ -85,7 +83,7 @@ class MemoryPatronsRepository < PatronsRepository
     end
   end
   
-  def leave_lounge(airport_id, lounge_id, user)
+  def leave_lounge(lounge_id, user)
     lounge_patrons = fetch_many(lounge_id, user.id)
 
     if !lounge_patrons.nil?
@@ -95,7 +93,7 @@ class MemoryPatronsRepository < PatronsRepository
         return false
       end
       
-      @lounge_repo.update_patron_count(airport_id, lounge_id, -1)
+      @lounge_repo.update_patron_count(lounge_id, -1)
       @@lounge_patrons[lounge_id.to_i - 1] = lounge_patrons
 
       return true

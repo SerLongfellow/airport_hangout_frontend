@@ -1,6 +1,6 @@
-
+require 'securerandom'
 require 'repositories/users/users_repository'
-
+require 'repositories/sessions/sessions_repository'
 
 class SessionsController < ApplicationController
   skip_before_action :check_for_session, only: [:new, :create]
@@ -17,8 +17,9 @@ class SessionsController < ApplicationController
     user = User.new("-1", params[:name], params[:hometown])
     user = @users_repo.create_user(user)
     
-    session[:current_user_id] = user.id
-    cookies.encrypted[:current_user_id] = user.id
+    session = Session.new(SecureRandom.uuid, user)
+    @sessions_repo.create(session)
+    cookies.encrypted[:session_id] = session.id
     
     redirect_to :controller => 'home', :action => 'index'
   end

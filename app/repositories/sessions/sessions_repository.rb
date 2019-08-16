@@ -1,6 +1,4 @@
-
 require 'repositories/application_repository'
-
 
 class SessionsRepository < ApplicationRepository
   def fetch_session(session_id)
@@ -8,22 +6,23 @@ class SessionsRepository < ApplicationRepository
   end
 end
 
-
 class MemorySessionsRepository < SessionsRepository
   @@initialized = false
   
   def initialize()
-    super()
-
-    if @@initialized
-      return
-    end
+    super
+    return if @@initialized
 
     @@sessions = {}
     @@initialized = true
   end
 
-  def fetch_session(session_id)
-    return @@sessions[session_id]
+  def fetch_by_id(session_id)
+    return @@sessions[session_id] if @@sessions.key?(session_id)
+    raise NotFoundError.new("No session found with ID #{session_id}")
+  end
+
+  def create(session)
+    @@sessions[session.id] = session
   end
 end
