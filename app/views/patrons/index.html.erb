@@ -4,7 +4,7 @@
     <div>
       <p><%= patron.name + " (" + patron.hometown + ")" %></p>
       <p><i><%= patron.status %></i></p>
-      <p><%= link_to("Send Message", conversation_path(patron.id)) %></p>
+      <p><%= button_to "Send Message", { :controller => 'conversations', :action => 'create', :patron_id => patron.id }, :method => :post  %></p>
     </div>
   </li>
 <% end %>

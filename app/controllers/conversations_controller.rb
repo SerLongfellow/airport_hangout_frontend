@@ -12,9 +12,41 @@ class ConversationsController < ApplicationController
   end
 
   def show
-    patron_id = params[:id]
+    user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
 
-    @patron = @patrons_repo.fetch_by_id(patron_id)
-    @messages = @conversations_repo.fetch_many(session[:current_user_id], patron_id)
+    puts "User ID is #{user.id}"
+    
+    @conversation = @conversations_repo.fetch_by_id(params[:id])
+    remote_party_id = @conversation.recipient_id
+    puts "RPID is #{remote_party_id}"
+
+    if remote_party_id == user.id
+      @remote_party = user
+    else
+      @remote_party = @patrons_repo.fetch_by_id(remote_party_id)
+    end
+
+    puts "Remote party: " + @remote_party.inspect
+  end
+
+  def create
+    patron_id = params[:patron_id]
+
+    patron = @patrons_repo.fetch_by_id(patron_id)
+    user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
+
+    begin
+      conversation = @conversations_repo.fetch_by_participant_ids(user.id, patron.id)
+    rescue NotFoundError => e
+      conversation = nil
+    end
+    
+    if conversation.nil?
+      # create new conversation by redirecting to show
+      conversation = Conversation.new(user.id, patron.id)
+      conversation = @conversations_repo.create!(conversation)
+    end
+      
+    redirect_to conversation_path(conversation.id)
   end
 end

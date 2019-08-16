@@ -1,26 +1,61 @@
+require 'repositories/patrons/patrons_repository'
+require 'repositories/users/users_repository'
 
 class ConversationsRepository < ApplicationRepository
-  def fetch_many(user_id, patron_id)
+  def fetch_many(user_id)
+    raise NoMethodError.new(not_implemented_error)
+  end
+  
+  def fetch_by_id(conversation_id)
     raise NoMethodError.new(not_implemented_error)
   end
 end
 
 class MemoryConversationsRepository < ConversationsRepository
-  require 'repositories/patrons/patrons_repository'
-  require 'repositories/users/users_repository'
+  require 'securerandom'
 
-  def fetch_many(user_id, patron_id)
-    messages =  []
+  @@initialized = false
 
-    users_repo = MemoryUsersRepository.new
-    user = users_repo.fetch_user(user_id)
+  def initialize
+    super
+    return if @@initialized
 
-    patrons_repo = MemoryPatronsRepository.new
-    patron = patrons_repo.fetch_by_id(patron_id)
+    @@convos = {}
 
-    messages.push(Message.new("555", "If you're 555...", user_id, user.name))
-    messages.push(Message.new("666", "...then I'm 666!", patron_id, patron.name))
+    @@initialized = true
+  end
 
-    return messages
+  def fetch_by_participant_ids(user_id, patron_id)
+    puts @@convos.inspect
+    
+    @@convos.each do |id, convo|
+      if (convo.sender_id == user_id && convo.recipient_id == patron_id) || \
+         (convo.recipient_id == user_id && convo.sender_id == patron_id)
+        return convo
+      end
+    end
+
+    raise NotFoundError.new("No conversation found with any combination of IDs #{user_id} and #{patron_id}")
+  end
+
+  def fetch_by_id(conversation_id)
+    return @@convos[conversation_id] if @@convos.key?(conversation_id)
+    raise NotFoundError.new("No conversation found with ID #{conversation_id}")
+  end
+
+  def create!(conversation)
+    id = SecureRandom.uuid
+    conversation.id = id
+    @@convos[id] = conversation
+    
+    return conversation
+  end
+  
+  def append_message!(conversation, message)
+    id = SecureRandom.uuid
+    conversation.id = id
+    @@convos[id] = conversation
+    
+    return conversation
   end
 end
