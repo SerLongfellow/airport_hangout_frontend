@@ -1,4 +1,9 @@
 <h1>Chat with <%= @remote_party.name %></h1>
 <div id="messages">
-  <%= render :partial => "message", :collection => @messages %>
-<div>
+  <% @conversation.messages.each do |message| %>
+    <%= render :partial => "message", :locals => { :message => message, :current_user => @current_user }  %>
+  <% end %>
+</div>
+
+<%= text_field_tag 'new-message', nil, placeholder: 'Type your message here...' %>
+<%= button_tag 'Send', { id: 'send-message-button' } %>

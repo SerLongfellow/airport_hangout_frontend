@@ -8,4 +8,8 @@ class User
     @hometown = hometown 
     @current_lounge = current_lounge
   end
+
+  def to_s
+    "user_" + @id
+  end
 end

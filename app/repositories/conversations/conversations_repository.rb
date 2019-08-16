@@ -52,8 +52,11 @@ class MemoryConversationsRepository < ConversationsRepository
   end
   
   def append_message!(conversation, message)
-    id = SecureRandom.uuid
-    conversation.id = id
+    id = conversation.id
+
+    raise NotFoundError.new("No conversation found with ID #{id}") if !@@convos.key?(id)
+    conversation = @@convos[id]
+    conversation.messages.append(message)
     @@convos[id] = conversation
     
     return conversation

@@ -14,17 +14,15 @@ class ConversationsController < ApplicationController
   def show
     user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
 
-    puts "User ID is #{user.id}"
-    
     @conversation = @conversations_repo.fetch_by_id(params[:id])
     remote_party_id = @conversation.recipient_id
-    puts "RPID is #{remote_party_id}"
 
     if remote_party_id == user.id
-      @remote_party = user
-    else
-      @remote_party = @patrons_repo.fetch_by_id(remote_party_id)
+      remote_party_id = @conversation.sender_id
     end
+      
+    @remote_party = @patrons_repo.fetch_by_id(remote_party_id)
+    @current_user = user
 
     puts "Remote party: " + @remote_party.inspect
   end
@@ -45,6 +43,8 @@ class ConversationsController < ApplicationController
       # create new conversation by redirecting to show
       conversation = Conversation.new(user.id, patron.id)
       conversation = @conversations_repo.create!(conversation)
+    else
+      puts "Found conversation #{conversation.id}, no need to create new one"
     end
       
     redirect_to conversation_path(conversation.id)

@@ -22,6 +22,8 @@ class MemoryUsersRepository < UsersRepository
     return if @@initialized
 
     @@users = {}
+    @@users["1"] = User.new("1", "Billy Bob", "Little Rock, AR", "1")
+    @@users["2"] = User.new("2", "Foo Bar", "Seattle, WA", "1")
     @@initialized = true
   end
 

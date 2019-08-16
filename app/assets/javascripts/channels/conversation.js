@@ -10,14 +10,17 @@ App.chat = App.cable.subscriptions.create("ConversationChannel", {
   },
 
   received: function(data) {
-    console.log("Got message: " + data["message"]);
+    message = data["message"]
+    console.log("Got message: " + message);
+
     $(document).ready(function() {
-      $("#messages").append(data["message"]);
+      $("#messages").append(message);
     });
 
   },
 
-  broadcast: function(data) {
-    this.perform("broadcast", {"data": data});
+  broadcast: function(message) {
+    var conversationId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    this.perform("broadcast", {"text": message, "conversationId": conversationId});
   }
 });
