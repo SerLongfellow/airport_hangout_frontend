@@ -25,7 +25,9 @@ function appendMessage(message) {
 }
 
 function notifyNewMessage() {
-
+    unreadMessages += 1;
+    var link = $("#view-messages-link");
+    link.text("View Messages (" + unreadMessages + ")");
 }
 
 $(document).ready(function() {
