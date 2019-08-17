@@ -1,0 +1,7 @@
+
+<% @conversations.each do |convo| %>
+  <div class="conversation-list-entry">
+    <% remote_party = convo.recipient_id == @current_user.id ? convo.sender_id : convo.recipient_id %>
+    <p><%= remote_party %> - <%= link_to "View Conversation", conversation_path(convo.id) %></p>
+  </div>
+<% end %>

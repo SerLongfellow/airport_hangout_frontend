@@ -65,7 +65,7 @@ class MemoryPatronsRepository < PatronsRepository
       end
     end
 
-    raise RepositoryErrors::NotFoundError.new("No patron found with ID #{patron_id}")
+    raise NotFoundError.new("No patron found with ID #{patron_id}")
   end
   
   def check_into_lounge(lounge_id, user)

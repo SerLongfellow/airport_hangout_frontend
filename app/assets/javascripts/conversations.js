@@ -13,6 +13,21 @@ function enableButton(button) {
     button.prop('disabled', false);
 }
 
+function onConversationPage(conversationId) {
+    var path = window.location.pathname;
+    var desiredPath = "/conversations/" + conversationId;
+    console.log(path + " == " + desiredPath);
+    return path == desiredPath;
+}
+
+function appendMessage(message) {
+    $("#messages").append(message);
+}
+
+function notifyNewMessage() {
+
+}
+
 $(document).ready(function() {
     var button = $(BUTTON_ID);
     button.click(function() {

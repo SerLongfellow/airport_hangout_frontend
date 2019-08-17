@@ -18,6 +18,8 @@ class PatronsController < ApplicationController
   def index()
     @user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
     @patrons = @patrons_repo.fetch_many(params[:lounge_id], @user.id)
+
+    render :partial => 'patrons/index'
   end
   
   def create()

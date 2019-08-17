@@ -9,6 +9,7 @@ class ConversationsRepository < ApplicationRepository
   def fetch_by_id(conversation_id)
     raise NoMethodError.new(not_implemented_error)
   end
+  
 end
 
 class MemoryConversationsRepository < ConversationsRepository
@@ -24,10 +25,13 @@ class MemoryConversationsRepository < ConversationsRepository
 
     @@initialized = true
   end
+  
+  def fetch_many(user_id)
+    c = @@convos.select { |id, convo| convo.sender_id == user_id || convo.recipient_id == user_id }
+    return c.map { |id, convo| convo }
+  end
 
   def fetch_by_participant_ids(user_id, patron_id)
-    puts @@convos.inspect
-    
     @@convos.each do |id, convo|
       if (convo.sender_id == user_id && convo.recipient_id == patron_id) || \
          (convo.recipient_id == user_id && convo.sender_id == patron_id)

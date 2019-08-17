@@ -2,5 +2,5 @@
     id="message_id_<%= message.id %>" 
     class="<%= if current_user.id == message.sender_id then 'sent-message' else 'received-message' end %>" 
     data-convo-id="<%= message.conversation_id %>" >
-  <p><%= message.data %> - <i><%= message.sender_name %></p>
+    <p><%= message.data %> - <i><%= message.sender_name %></i></p>
 </div>

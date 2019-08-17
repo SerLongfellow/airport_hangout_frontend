@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     delete 'patronage', :to => 'patrons#destroy'
   end
     
-  resources :conversations, only: [:show, :create] do
+  resources :conversations, only: [:index, :show, :create] do
     resources :messages, only: [:create]
   end
 

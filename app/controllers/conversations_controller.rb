@@ -5,10 +5,15 @@ require 'repositories/patrons/patrons_repository'
 
 class ConversationsController < ApplicationController
   def initialize(conversations_repo_class=MemoryConversationsRepository,
-                 patrons_repo_class=MemoryPatronsRepository)
+                 users_repo_class=MemoryUsersRepository)
     super()
     @conversations_repo = conversations_repo_class.new()
-    @patrons_repo = patrons_repo_class.new()
+    @users_repo = users_repo_class.new()
+  end
+
+  def index
+    @current_user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
+    @conversations = @conversations_repo.fetch_many(@current_user.id)
   end
 
   def show
@@ -21,16 +26,14 @@ class ConversationsController < ApplicationController
       remote_party_id = @conversation.sender_id
     end
       
-    @remote_party = @patrons_repo.fetch_by_id(remote_party_id)
+    @remote_party = @users_repo.fetch_user(remote_party_id)
     @current_user = user
-
-    puts "Remote party: " + @remote_party.inspect
   end
 
   def create
     patron_id = params[:patron_id]
 
-    patron = @patrons_repo.fetch_by_id(patron_id)
+    patron = @users_repo.fetch_user(patron_id)
     user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
 
     begin
