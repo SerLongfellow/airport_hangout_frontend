@@ -1,7 +1,3 @@
-
-require 'repositories/application_repository'
-
-
 class AirportsRepository < ApplicationRepository
   def fetch_many()
     raise NoMethodError.new(not_implemented_error)
@@ -32,5 +28,11 @@ class MemoryAirportsRepository < AirportsRepository
   
   def fetch_by_id(id)
     return @@airports[id.to_i - 1]
+  end
+end
+
+class MemoryAirportsRepositoryFactory
+  def self.create_airports_repository
+    MemoryAirportsRepository.new
   end
 end

@@ -1,51 +1,37 @@
 
-require 'repositories/conversations/conversations_repository'
-require 'repositories/patrons/patrons_repository'
-
-
 class ConversationsController < ApplicationController
-  def initialize(conversations_repo_class=MemoryConversationsRepository,
-                 users_repo_class=MemoryUsersRepository)
-    super()
-    @conversations_repo = conversations_repo_class.new()
-    @users_repo = users_repo_class.new()
-  end
-
   def index
-    @current_user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
-    @conversations = @conversations_repo.fetch_many(@current_user.id)
+    @current_user = @session.current_user
+    @conversations = create_conversations_repository.fetch_many(@session.current_user.id)
   end
 
   def show
-    user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
-
-    @conversation = @conversations_repo.fetch_by_id(params[:id])
+    @current_user = @session.current_user
+    @conversation = create_conversations_repository.fetch_by_id(params[:id])
     remote_party_id = @conversation.recipient_id
 
-    if remote_party_id == user.id
+    if remote_party_id == @current_user
       remote_party_id = @conversation.sender_id
     end
       
-    @remote_party = @users_repo.fetch_user(remote_party_id)
-    @current_user = user
+    @remote_party = create_users_repository.fetch_user(remote_party_id)
   end
 
   def create
     patron_id = params[:patron_id]
-
-    patron = @users_repo.fetch_user(patron_id)
-    user = @sessions_repo.fetch_by_id(cookies.encrypted[:session_id]).current_user
+    patron = create_users_repository.fetch_user(patron_id)
+    conversations_repo = create_conversations_repository
 
     begin
-      conversation = @conversations_repo.fetch_by_participant_ids(user.id, patron.id)
+      conversation = conversations_repo.fetch_by_participant_ids(@session.current_user.id, patron.id)
     rescue NotFoundError => e
       conversation = nil
     end
     
     if conversation.nil?
       # create new conversation by redirecting to show
-      conversation = Conversation.new(user.id, patron.id)
-      conversation = @conversations_repo.create!(conversation)
+      conversation = Conversation.new(@session.current_user.id, patron.id)
+      conversation = conversations_repo.create!(conversation)
     else
       puts "Found conversation #{conversation.id}, no need to create new one"
     end

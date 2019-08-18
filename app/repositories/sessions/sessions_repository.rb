@@ -1,7 +1,9 @@
-require 'repositories/application_repository'
-
 class SessionsRepository < ApplicationRepository
   def fetch_session(session_id)
+    raise NoMethodError.new(not_implemented_error)
+  end
+
+  def create(session)
     raise NoMethodError.new(not_implemented_error)
   end
 end
@@ -26,3 +28,10 @@ class MemorySessionsRepository < SessionsRepository
     @@sessions[session.id] = session
   end
 end
+
+class MemorySessionsRepositoryFactory
+  def self.create_sessions_repository
+    MemorySessionsRepository.new
+  end
+end
+

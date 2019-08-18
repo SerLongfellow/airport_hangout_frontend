@@ -1,6 +1,3 @@
-require 'repositories/patrons/patrons_repository'
-require 'repositories/users/users_repository'
-
 class ConversationsRepository < ApplicationRepository
   def fetch_many(user_id)
     raise NoMethodError.new(not_implemented_error)
@@ -64,5 +61,11 @@ class MemoryConversationsRepository < ConversationsRepository
     @@convos[id] = conversation
     
     return conversation
+  end
+end
+
+class MemoryConversationsRepositoryFactory
+  def self.create_conversations_repository
+    MemoryConversationsRepository.new
   end
 end

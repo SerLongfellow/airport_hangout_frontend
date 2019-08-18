@@ -1,6 +1,3 @@
-require 'repositories/application_repository'
-require 'repositories/airports/airports_repository'
-
 class LoungesRepository < ApplicationRepository
   def fetch_many()
     raise NoMethodError.new(not_implemented_error)
@@ -22,6 +19,7 @@ class MemoryLoungesRepository < LoungesRepository
   def initialize()
     return if @@initialized
 
+    require 'repositories/airports/airports_repository'
     airports_repo = MemoryAirportsRepository.new
 
     @@airports = {}
@@ -80,5 +78,11 @@ class MemoryLoungesRepository < LoungesRepository
 
     lounge.number_of_patrons += inc
     return lounge
+  end
+end
+
+class MemoryLoungesRepositoryFactory
+  def self.create_lounges_repository
+    MemoryLoungesRepository.new
   end
 end

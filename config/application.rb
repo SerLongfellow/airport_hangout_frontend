@@ -25,5 +25,6 @@ module AirportHangoutFrontend
     # the framework and any gems in your application.
     
     config.generators.javascript_engine = :js    
+    config.session_store = :disabled
   end
 end

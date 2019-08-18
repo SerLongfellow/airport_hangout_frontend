@@ -1,6 +1,7 @@
 #!/bin/sh
 # Run tests locally upon commit to not have wait on CI/CD
 
+bin/spring stop
 bin/rails test -f -d
 success=$?
 if [ $success -ne 0 ]

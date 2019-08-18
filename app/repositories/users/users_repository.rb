@@ -1,8 +1,3 @@
-
-require 'repositories/application_repository'
-require 'repositories/lounges/lounges_repository'
-
-
 class UsersRepository < ApplicationRepository
   def fetch_user(user_id)
     raise NoMethodError.new(not_implemented_error)
@@ -12,7 +7,6 @@ class UsersRepository < ApplicationRepository
     raise NoMethodError.new(not_implemented_error)
   end
 end
-
 
 class MemoryUsersRepository < UsersRepository
   @@initialized = false
@@ -48,5 +42,11 @@ class MemoryUsersRepository < UsersRepository
       @@users[user.id].current_lounge = lounge
       return @@users[user.id]
     end
+  end
+end
+
+class MemoryUsersRepositoryFactory
+  def self.create_users_repository
+    MemoryUsersRepository.new
   end
 end

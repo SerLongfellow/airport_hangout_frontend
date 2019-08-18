@@ -6,15 +6,15 @@
 <p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
 
-<% if @user.current_lounge.nil? %>
+<% if @current_user.current_lounge.nil? %>
   <p><%= link_to "Check in!", lounge_patrons_path(@lounge.id), method: :post %></p>
 
-<% elsif @lounge.id == @user.current_lounge.id %>
+<% elsif @lounge.id == @current_user.current_lounge.id %>
   <p>You're currently checked into this lounge! Meet some friends!</p>
   <p><%= link_to "Check out", lounge_patronage_path(@lounge.id,), method: :delete %></p>
 
 <% else %>
-  <p>You're currently checked into <%= @user.current_lounge.name %>. <%= link_to "Click here", lounge_patrons_path(@lounge.id), method: :post %> to leave and check into this lounge.</p>
+  <p>You're currently checked into <%= @current_user.current_lounge.name %>. <%= link_to "Click here", lounge_patrons_path(@lounge.id), method: :post %> to leave and check into this lounge.</p>
 <% end %>
 
 <script type="text/javascript">

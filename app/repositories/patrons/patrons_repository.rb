@@ -1,8 +1,3 @@
-
-require 'repositories/application_repository'
-require 'repositories/lounges/lounges_repository'
-
-
 class PatronsRepository < ApplicationRepository
   def fetch_many(lounge_id, current_user_id)
     raise NoMethodError.new(not_implemented_error())
@@ -22,8 +17,9 @@ class MemoryPatronsRepository < PatronsRepository
 
   @@initialized = false
   
-  def initialize(lounge_repo_class=MemoryLoungesRepository)
-    @lounge_repo = lounge_repo_class.new
+  def initialize()
+    require 'repositories/lounges/lounges_repository'
+    @lounge_repo = MemoryLoungesRepository.new
 
     return if @@initialized
 
@@ -100,5 +96,11 @@ class MemoryPatronsRepository < PatronsRepository
     else
       return false
     end
+  end
+end
+
+class MemoryPatronsRepositoryFactory
+  def self.create_patrons_repository
+    MemoryPatronsRepository.new
   end
 end
