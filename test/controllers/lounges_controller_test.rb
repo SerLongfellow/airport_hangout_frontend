@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LoungesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in()
+    sign_in
     @good_airport_id = "1"
     @bad_airport_id = "99"
     

@@ -19,7 +19,14 @@ class ConversationsController < ApplicationController
 
   def create
     patron_id = params[:patron_id]
-    patron = create_users_repository.fetch_user(patron_id)
+
+    begin
+      patron = create_users_repository.fetch_user(patron_id)
+    rescue NotFoundError => e
+      render_400("No patron found with ID #{patron_id}")
+      return
+    end
+
     conversations_repo = create_conversations_repository
 
     begin

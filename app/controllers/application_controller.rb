@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
   rescue_from NotFoundError, :with => :render_404
 
   protected
+ 
+  def render_400(error_description)
+    render :json => { :error => '400 - Bad Request', :error_description => error_description }, :status => 400
+  end
+  
   def render_403
     render :file => "#{Rails.root}/public/403.html", :status => 403
   end
