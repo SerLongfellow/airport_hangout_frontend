@@ -9,19 +9,10 @@ phases:
     runtime-versions:
       ruby: "$RUBY_VERSION"
     commands:
-      - echo Entered the install phase...
       - apt-get update -y
       - gem install rails
-      - bundle update
-  pre_build:
-    commands:
-      - echo Entered the pre_build phase...
+      - bundle update --group test
   build:
     commands:
-      - echo Entered the build phase...
       - echo Build started on `date`
       - bin/spring stop && rails test
-  post_build:
-    commands:
-      - echo Entered the post_build phase...
-      - echo Build completed on `date`
