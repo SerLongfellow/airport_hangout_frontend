@@ -20,7 +20,7 @@ phases:
     commands:
       - bin/spring stop
       - rails test
-      - export IMAGE_NAME="$(airport-hangout-frontend:$(cat VERSION.txt).$(date -u +%Y%m%d%H%M%S))"
+      - export IMAGE_NAME="airport-hangout-frontend:$($(cat VERSION.txt).$(date -u +%Y%m%d%H%M%S))"
       - docker build -t $IMAGE_NAME .
   post_build:
     commands:
