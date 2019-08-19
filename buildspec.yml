@@ -10,9 +10,16 @@ phases:
       ruby: "$RUBY_VERSION"
     commands:
       - apt-get update -y
+      - apt-get install -y aws-cli
       - gem install rails
       - bundle update --group test
+  pre_build:
+      - eval "$(aws ecr get-login --no-include-email)"
   build:
     commands:
-      - echo Build started on `date`
-      - bin/spring stop && rails test
+      - bin/spring stop
+      - rails test
+      - docker build -t airport-hangout-frontend:$(cat VERSION.txt).$(date -u +%Y%m%d%H%M%S) .
+  post_build:
+    commands:
+      - echo "Placeholder for docker push"
