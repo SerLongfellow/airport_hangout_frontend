@@ -12,6 +12,7 @@ phases:
       - echo Entered the install phase...
       - apt-get update -y
       - gem install rails
+      - bundle update
   pre_build:
     commands:
       - echo Entered the pre_build phase...
