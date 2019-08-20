@@ -56,6 +56,13 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         {
             "Effect": "Allow",
             "Action": [
+                "ecr:GetAuthorizationToken"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "s3:*"
             ],
             "Resource": ["${aws_s3_bucket.frontend_bucket.arn}", "${aws_s3_bucket.frontend_bucket.arn}/*"]
