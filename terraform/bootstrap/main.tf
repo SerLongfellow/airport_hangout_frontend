@@ -59,6 +59,13 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                 "s3:*"
             ],
             "Resource": ["${aws_s3_bucket.frontend_bucket.arn}", "${aws_s3_bucket.frontend_bucket.arn}/*"]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "*"
         }
     ]
 }
@@ -86,6 +93,7 @@ resource "aws_codebuild_project" "codebuild" {
     image                       = "aws/codebuild/standard:2.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
   }
 
   logs_config {
