@@ -1,4 +1,3 @@
-
 provider "aws" {
   version = "~> 2.0"
   region  = "us-east-1"
@@ -37,10 +36,11 @@ resource "aws_iam_role" "codebuild_role" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  role = "${aws_iam_role.codebuild_role.name}"
+  role = aws_iam_role.codebuild_role.name
 
   policy = <<POLICY
 {
@@ -77,13 +77,14 @@ resource "aws_iam_role_policy" "codebuild_policy" {
     ]
 }
 POLICY
+
 }
 
 resource "aws_codebuild_project" "codebuild" {
   name          = "airport_hangout_frontend_codebuild"
   description   = ""
   build_timeout = "10"
-  service_role  = "${aws_iam_role.codebuild_role.arn}"
+  service_role  = aws_iam_role.codebuild_role.arn
   badge_enabled = true
 
   artifacts {
@@ -91,8 +92,8 @@ resource "aws_codebuild_project" "codebuild" {
   }
 
   cache {
-    type     = "LOCAL"
-    modes    = ["LOCAL_DOCKER_LAYER_CACHE"]
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE"]
   }
 
   environment {
@@ -105,36 +106,51 @@ resource "aws_codebuild_project" "codebuild" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = "airport_hangout_frontend/builds"
+      group_name  = "airport_hangout_frontend/builds"
       stream_name = "codebuild"
     }
   }
 
   source {
-    type            = "GITHUB"
-    location        = "https://github.com/SerLongfellow/airport_hangout_frontend.git"
-    git_clone_depth = 1
+    type                = "GITHUB"
+    location            = "https://github.com/SerLongfellow/airport_hangout_frontend.git"
+    git_clone_depth     = 1
     report_build_status = true
     auth {
-      type = "OAUTH"
+      type     = "OAUTH"
       resource = "arn:aws:codebuild:us-east-1:394069212708:token/github"
     }
   }
 }
 
 resource "aws_codebuild_webhook" "codebuild_webhook" {
-  project_name = "${aws_codebuild_project.codebuild.name}"
+  project_name = aws_codebuild_project.codebuild.name
   filter_group {
     filter {
-      type = "EVENT"
+      type    = "EVENT"
       pattern = "PUSH"
     }
   }
-  
+
   filter_group {
     filter {
-      type = "EVENT"
+      type    = "EVENT"
       pattern = "PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED,PULL_REQUEST_REOPENED,PULL_REQUEST_MERGED"
     }
   }
 }
+
+resource "aws_codedeploy_app" "codedeploy_app" {
+  compute_platform = "ECS"
+  name             = "airport_hangout_frontend_app"
+}
+
+resource "aws_codedeploy_deployment_config" "codedeploy_config" {
+  deployment_config_name = "airport_hangout_frontend_app_deploy_config"
+
+  minimum_healthy_hosts {
+    type  = "HOST_COUNT"
+    value = 2
+  }
+}
+
