@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+    commands:
+      - apt-get update -y && apt-get install zip
+  build:
+    commands:
+      - terraform init terraform/bootstrap/
+      - terraform apply -auto-approve terraform/bootstrap/
+  post-build:
+    commands:
+      - zip airport_hangout_frontend_source.zip *
+      - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.pipelines/airport_hangout_frontend/

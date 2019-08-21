@@ -3,8 +3,8 @@ module "resources" {
   source = "../resources"
 }
 
-resource "aws_iam_role" "codepipeline_role" {
-  name = "codepipeline_role"
+resource "aws_iam_role" "codepipeline_bootstrap_role" {
+  name = "codepipeline_bootstrap_role"
 
   assume_role_policy = <<EOF
 {
@@ -23,8 +23,8 @@ EOF
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "codepipeline_policy"
-  role = "${aws_iam_role.codepipeline_role.id}"
+  name = "codepipeline_bootstrap_policy"
+  role = "${aws_iam_role.codepipeline_bootstrap_role.id}"
 
   policy = <<EOF
 {
@@ -36,8 +36,8 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${aws_s3_bucket.codepipeline_bucket.arn}",
-        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+        "${module.resources.codepipeline_bucket_output.arn}",
+        "${module.resources.codepipeline_bucket_output.arn}/*"
       ]
     },
     {
@@ -53,12 +53,12 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 EOF
 }
 
-resource "aws_codepipeline" "codepipeline" {
-  name      = "airport_hangout_frontend_pipeline"
-  role_arn  = "${aws_iam_role.codepipeline_role.arn}"
+resource "aws_codepipeline" "codepipeline_bootstrap" {
+  name      = "airport_hangout_frontend_pipeline_bootstrap"
+  role_arn  = "${aws_iam_role.codepipeline_bootstrap_role.arn}"
   
   artifact_store {
-    location = "${aws_s3_bucket.codepipeline_bucket.bucket}"
+    location = "${module.resources.codepipeline_bucket_output.bucket}"
     type     = "S3"
   }
 
@@ -96,29 +96,15 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["BuildArtifact"]
 
       configuration = {
-        ProjectName = "${aws_codebuild_project.codebuild.name}"
-      }
-    }
-    
-    action {
-      name        = "ProvisionAppInfrastructure"
-      category    = "Build"
-      owner       = "AWS"
-      provider    = "CodeBuild"
-      version     = "1"
-      input_artifacts = ["SourceArtifact"]
-      output_artifacts = []
-
-      configuration = {
-        ProjectName = "${aws_codebuild_project.codebuild_infra.name}"
+        ProjectName = "${aws_codebuild_project.codebuild_bootstrap.name}"
       }
     }
   }
 }
 
-resource "aws_codepipeline_webhook" "codepipeline_webhook" {
-  name = "airport_hangout_frontend_codepipeline_github_webhook"
-  target_pipeline = "${aws_codepipeline.codepipeline.name}"
+resource "aws_codepipeline_webhook" "codepipeline_bootstrap_webhook" {
+  name = "airport_hangout_frontend_codepipeline_bootstrap_github_webhook"
+  target_pipeline = "${aws_codepipeline.codepipeline_bootstrap.name}"
   target_action   = "Source"
 
   authentication = "GITHUB_HMAC"
