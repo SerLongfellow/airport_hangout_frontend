@@ -100,6 +100,20 @@ resource "aws_codepipeline" "codepipeline" {
         ProjectName = "${aws_codebuild_project.codebuild.name}"
       }
     }
+    
+    action {
+      name        = "ProvisionAppInfrastructure"
+      category    = "Build"
+      owner       = "AWS"
+      provider    = "CodeBuild"
+      version     = "1"
+      input_artifacts = ["SourceArtifact"]
+      output_artifacts = []
+
+      configuration = {
+        ProjectName = "${aws_codebuild_project.codebuild.name}"
+      }
+    }
   }
 }
 

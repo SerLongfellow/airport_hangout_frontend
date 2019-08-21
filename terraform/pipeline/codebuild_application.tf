@@ -86,11 +86,12 @@ resource "aws_codebuild_project" "codebuild" {
   logs_config {
     cloudwatch_logs {
       group_name  = "airport_hangout_frontend/builds"
-      stream_name = "codebuild"
+      stream_name = "app"
     }
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
+    buildspec = "buildspec_appliation.yml"
   }
 }

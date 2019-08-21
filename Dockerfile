@@ -1,5 +1,4 @@
-FROM ruby:2.6
-RUN apt-get update
+FROM ruby:2.6-alpine
 
 ENV WORK_DIR airport-hangout-frontend
 ENV ENVIRONMENT test
@@ -7,12 +6,13 @@ ENV ENVIRONMENT test
 RUN mkdir $WORK_DIR
 WORKDIR $WORK_DIR
 
-RUN bundle config --global frozen 1
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler
-RUN bundle install
-RUN gem install rails
-RUN apt-get --yes install nodejs
+
+RUN apk add --update nodejs ruby-dev build-base libxml2-dev libxslt-dev && \
+    gem install bundler && \
+    bundle config build.nokogiri --use-system-libraries && \
+    gem install rails && \
+    bundle install
 
 COPY . .
 
