@@ -77,5 +77,6 @@ resource "aws_codebuild_project" "codebuild_infra" {
 
   source {
     type      = "CODEPIPELINE"
+    buildspec = "buildspec_infrastructure.yml"
   }
 }

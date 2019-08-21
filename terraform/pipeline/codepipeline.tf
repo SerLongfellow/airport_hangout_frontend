@@ -76,10 +76,11 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        Owner  = "SerLongfellow"
-        Repo   = "airport_hangout_frontend"
-        Branch = "feature/ci"
+        Owner                = "SerLongfellow"
+        Repo                 = "airport_hangout_frontend"
+        Branch               = "feature/ci"
         PollForSourceChanges = "false"
+        OAuthToken           = "unneeded"
       }
     }
   }
@@ -98,7 +99,6 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ProjectName = "${aws_codebuild_project.codebuild.name}"
-        PrimarySource = "buildspec_application.yml"
       }
     }
     
@@ -112,8 +112,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = []
 
       configuration = {
-        ProjectName = "${aws_codebuild_project.codebuild.name}"
-        PrimarySource = "buildspec_infrastructure.yml"
+        ProjectName = "${aws_codebuild_project.codebuild_infra.name}"
       }
     }
   }
