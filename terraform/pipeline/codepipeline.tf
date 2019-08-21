@@ -36,8 +36,8 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${aws_s3_bucket.codepipeline_bucket.arn}",
-        "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+        "${module.resources.codepipeline_bucket_output.arn}",
+        "${module.resources.codepipeline_bucket_output.arn}/*"
       ]
     },
     {
@@ -58,7 +58,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn  = "${aws_iam_role.codepipeline_role.arn}"
   
   artifact_store {
-    location = "${aws_s3_bucket.codepipeline_bucket.bucket}"
+    location = "${module.resources.codepipeline_bucket_output.bucket}"
     type     = "S3"
   }
 

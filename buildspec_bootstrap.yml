@@ -10,7 +10,7 @@ phases:
     commands:
       - terraform init terraform/bootstrap/
       - terraform apply -auto-approve terraform/bootstrap/
-  post-build:
+  post_build:
     commands:
       - zip airport_hangout_frontend_source.zip *
       - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.pipelines/airport_hangout_frontend/

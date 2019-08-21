@@ -22,7 +22,7 @@ resource "aws_iam_role" "codepipeline_bootstrap_role" {
 EOF
 }
 
-resource "aws_iam_role_policy" "codepipeline_policy" {
+resource "aws_iam_role_policy" "codepipeline_bootstrap_policy" {
   name = "codepipeline_bootstrap_policy"
   role = "${aws_iam_role.codepipeline_bootstrap_role.id}"
 
