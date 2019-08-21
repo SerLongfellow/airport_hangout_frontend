@@ -103,7 +103,6 @@ resource "aws_codepipeline" "codepipeline" {
   }
 }
 
-/*
 resource "aws_codepipeline_webhook" "codepipeline_webhook" {
   name = "airport_hangout_frontend_codepipeline_github_webhook"
   target_pipeline = "${aws_codepipeline.codepipeline.name}"
@@ -118,4 +117,4 @@ resource "aws_codepipeline_webhook" "codepipeline_webhook" {
     json_path    = "$.ref"
     match_equals = "refs/heads/{Branch}"
   }
-}*/
+}
