@@ -22,7 +22,7 @@ variable "ops_bucket" {
 terraform {
   backend "s3" {
     bucket = "com.jefflong.airporthangout.ops"
-    key    = "frontend/infrastructure/pipeline-terraform-state.tfstate"
+    key    = "frontend/infrastructure/bootstrap-terraform-state.tfstate"
     region = "us-east-1"
   }
 }
