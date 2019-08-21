@@ -17,6 +17,6 @@ phases:
       - terraform apply -auto-approve terraform/bootstrap/
   post_build:
     commands:
-      - if [[ "$CODEBUILD_BUILD_SUCCEEDING" == "0" ]]; then exit 1
+      - if [[ "$CODEBUILD_BUILD_SUCCEEDING" == "0" ]]; then exit 1; fi
       - zip airport_hangout_frontend_source.zip *
       - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.pipelines/airport_hangout_frontend/
