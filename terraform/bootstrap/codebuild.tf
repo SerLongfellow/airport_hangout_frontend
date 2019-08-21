@@ -29,9 +29,14 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
         {
             "Effect": "Allow",
             "Action": [
-                "s3:Get*"
+                "s3:Get*",
+                "s3:Put*",
+                "s3:List*"
             ],
-            "Resource": ["${module.resources.codepipeline_bucket_output.arn}", "${module.resources.codepipeline_bucket_output.arn}/*"]
+            "Resource": [
+                "${module.resources.codepipeline_bucket_output.arn}", 
+                "${module.resources.codepipeline_bucket_output.arn}/*"
+            ]
         },
         {
             "Effect": "Allow",
