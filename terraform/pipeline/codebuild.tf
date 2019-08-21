@@ -43,9 +43,9 @@ resource "aws_iam_role_policy" "codebuild_policy" {
         {
             "Effect": "Allow",
             "Action": [
-                "s3:*"
+                "s3:Get*"
             ],
-            "Resource": ["${aws_s3_bucket.frontend_bucket.arn}", "${aws_s3_bucket.frontend_bucket.arn}/*"]
+            "Resource": ["${aws_s3_bucket.codepipeline_bucket.arn}", "${aws_s3_bucket.codepipeline_bucket.arn}/*"]
         },
         {
             "Effect": "Allow",

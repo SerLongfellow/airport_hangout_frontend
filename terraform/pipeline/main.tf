@@ -16,7 +16,3 @@ terraform {
   }
 }
 
-resource "aws_s3_bucket" "frontend_bucket" {
-  bucket_prefix = "com.jefflong.airporthangout.frontend."
-}
-
