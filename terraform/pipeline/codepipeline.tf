@@ -98,6 +98,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ProjectName = "${aws_codebuild_project.codebuild.name}"
+        PrimarySource = "buildspec_application.yml"
       }
     }
     
@@ -112,6 +113,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ProjectName = "${aws_codebuild_project.codebuild.name}"
+        PrimarySource = "buildspec_infrastructure.yml"
       }
     }
   }
