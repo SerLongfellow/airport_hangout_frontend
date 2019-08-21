@@ -8,6 +8,11 @@ variable "webhook_secret" {
   description = "Secret to integrate GitHub webhook into CodePipeline"
 }
 
+variable "github_token" {
+  type        = string
+  description = "Token to use GitHub API from CodePipeline"
+}
+
 terraform {
   backend "s3" {
     bucket = "com.jefflong.airporthangout.ops"

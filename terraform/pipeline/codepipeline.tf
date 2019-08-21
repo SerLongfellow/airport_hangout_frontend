@@ -80,7 +80,7 @@ resource "aws_codepipeline" "codepipeline" {
         Repo                 = "airport_hangout_frontend"
         Branch               = "feature/ci"
         PollForSourceChanges = "false"
-        OAuthToken           = "unneeded"
+        OAuthToken           = "${var.github_token}"
       }
     }
   }
