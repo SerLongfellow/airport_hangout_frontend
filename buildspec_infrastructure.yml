@@ -15,5 +15,6 @@ phases:
     commands:
       - pwd
       - ls
+      - ls terraform
       - terraform init terraform/application/
       - terraform apply -auto-approve terraform/application/
