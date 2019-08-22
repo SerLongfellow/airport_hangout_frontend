@@ -12,4 +12,3 @@ resource "aws_s3_bucket" "codepipeline_bucket" {
 output "codepipeline_bucket_output" {
   value = aws_s3_bucket.codepipeline_bucket
 }
-

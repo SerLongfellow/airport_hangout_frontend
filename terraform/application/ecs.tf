@@ -3,13 +3,71 @@ resource "aws_ecs_cluster" "cluster" {
   name = "airport_hangout_frontend_cluster"
 }
 
+
+resource "aws_iam_role" "ecs_execution_role" {
+  name = "airport_hangout_frontend_ecs_task_execution_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+           "ecs.amazonaws.com",
+           "ecs-tasks.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "ecs_execution_policy" {
+  name = "airport_hangout_frontend_ecs_task_execution_policy"
+  role = "${aws_iam_role.ecs_execution_role.id}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:Describe*",
+        "ecs:List*",
+        "ecs:Poll",
+        "ecs:Start*",
+        "ecs:Submit*",
+        "ecs:Update*"
+      ],
+      "Resource": "${aws_ecs_cluster.cluster.arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:Describe*",
+        "ecr:GetAuthorizationToken",
+        "ecr:List*"
+      ],
+      "Resource": "${aws_ecs_cluster.cluster.arn}"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_ecs_task_definition" "task" {
   family                = "airport_hangout_frontend_ecs_task"
+  execution_role_arn    = "${aws_iam_role.ecs_execution_role.arn}"
   container_definitions = <<EOF
 [
   {
     "name": "frontend",
-    "image": "airport-hangout-frontend",
+    "image": "airport_hangout_ecr_repo/airport-hangout-frontend:latest",
     "memory": 512,
     "portMappings": [
       {
