@@ -24,7 +24,7 @@ phases:
       - docker build -t $IMAGE_NAME .
   post_build:
     commands:
-      - test "$CODEBUILD_BUILD_SUCCEEDING" != '0' && exit 1
+      - if [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ]; then exit 1; fi
       - export ECR_URI=$(aws ecr describe-repositories --repository-names 'airport_hangout_ecr_repo' --query 'repositories[0].repositoryUri' --output=text)
       - docker tag $IMAGE_NAME "$ECR_URI"":""$IMAGE_TAG"
       - docker push "$ECR_URI"":""$IMAGE_TAG"
