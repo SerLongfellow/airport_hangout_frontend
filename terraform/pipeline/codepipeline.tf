@@ -112,19 +112,3 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 }
-
-resource "aws_codepipeline_webhook" "codepipeline_webhook" {
-  name = "airport_hangout_frontend_codepipeline_github_webhook"
-  target_pipeline = "${aws_codepipeline.codepipeline.name}"
-  target_action   = "Source"
-
-  authentication = "GITHUB_HMAC"
-  authentication_configuration {
-    secret_token = "${var.webhook_secret}"
-  }
-   
-  filter {
-    json_path    = "$.ref"
-    match_equals = "refs/heads/{Branch}"
-  }
-}
