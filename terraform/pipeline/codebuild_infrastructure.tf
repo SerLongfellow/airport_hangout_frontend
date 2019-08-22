@@ -67,6 +67,13 @@ resource "aws_iam_role_policy" "codebuild_infra_policy" {
             ],
             "Resource": "*"
         }
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:*KeyPair*",
+            ],
+            "Resource": "*"
+        }
     ]
 }
 POLICY
