@@ -14,5 +14,5 @@ phases:
   build:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ]; then exit 1; fi
-      - terraform init terraform/application/
-      - terraform apply -auto-approve terraform/application/
+      - terraform init -no-color terraform/application/
+      - terraform apply -no-color -auto-approve terraform/application/
