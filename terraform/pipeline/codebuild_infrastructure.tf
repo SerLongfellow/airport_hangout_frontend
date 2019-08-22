@@ -58,6 +58,13 @@ resource "aws_iam_role_policy" "codebuild_infra_policy" {
                 "ecs:*"
             ],
             "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:*Role*"
+            ],
+            "Resource": "*"
         }
     ]
 }
