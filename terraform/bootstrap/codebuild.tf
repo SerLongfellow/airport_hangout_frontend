@@ -50,7 +50,21 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
         {
             "Effect": "Allow",
             "Action": [
+                "s3:*"
+            ],
+            "Resource": ["*"]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "logs:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "codedeploy:*"
             ],
             "Resource": "*"
         },
@@ -72,6 +86,20 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
             "Effect": "Allow",
             "Action": [
                 "ecr:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole",
+                "iam:CreateRole",
+                "iam:UpdateRole",
+                "iam:UpdateRoleDescription",
+                "iam:DeleteRole",
+                "iam:GetRolePolicy",
+                "iam:CreatePolicy",
+                "iam:DeletePolicy"
             ],
             "Resource": "*"
         }
