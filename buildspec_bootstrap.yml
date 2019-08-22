@@ -17,6 +17,6 @@ phases:
       - terraform apply -no-color -auto-approve terraform/pipeline/
   post_build:
     commands:
-      - test "$CODEBUILD_BUILD_SUCCEEDING" == '0' && exit 1
+      - [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ] && exit 1
       - zip airport_hangout_frontend_source.zip *
       - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.pipelines/airport_hangout_frontend/
