@@ -20,7 +20,7 @@ phases:
       - rails test
       - export IMAGE_BASE="airport-hangout-frontend"
       - export IMAGE_TAG="$(cat VERSION.txt).$(date -u +%Y%m%d%H%M%S)"
-      - export IMAGE_NAME="$(IMAGE_BASE):$(IMAGE_TAG)"
+      - export IMAGE_NAME="$IMAGE_BASE:$IMAGE_TAG"
       - docker build -t $IMAGE_NAME .
   post_build:
     commands:
