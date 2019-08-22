@@ -99,7 +99,8 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
                 "iam:DeleteRole",
                 "iam:GetRolePolicy",
                 "iam:CreatePolicy",
-                "iam:DeletePolicy"
+                "iam:DeletePolicy",
+                "iam:PutRolePolicy"
             ],
             "Resource": "*"
         }
