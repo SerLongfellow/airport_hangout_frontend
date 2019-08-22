@@ -67,7 +67,7 @@ resource "aws_ecs_task_definition" "task" {
 [
   {
     "name": "frontend",
-    "image": "airport_hangout_ecr_repo/airport-hangout-frontend:latest",
+    "image": "394069212708.dkr.ecr.us-east-1.amazonaws.com/airport_hangout_ecr_repo/airport-hangout-frontend:latest",
     "memory": 512,
     "portMappings": [
       {
