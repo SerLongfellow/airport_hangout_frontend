@@ -92,4 +92,9 @@ resource "aws_ecs_service" "service" {
   task_definition     = "${aws_ecs_task_definition.task.arn}"
   desired_count       = 1
   scheduling_strategy = "REPLICA"
+  launch_type         = "EC2"
+  
+  deployment_controller {
+    type = "ECS"
+  }
 }
