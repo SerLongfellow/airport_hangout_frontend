@@ -66,7 +66,7 @@ resource "aws_iam_role_policy" "codebuild_infra_policy" {
                 "iam:*Profile*"
             ],
             "Resource": "*"
-        }
+        },
         {
             "Effect": "Allow",
             "Action": [
