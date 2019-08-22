@@ -81,7 +81,7 @@ resource "aws_codepipeline" "codepipeline" {
   }
   
   stage {
-    name        = "Build"
+    name = "Build"
     
     action {
       name        = "Build"
@@ -96,6 +96,10 @@ resource "aws_codepipeline" "codepipeline" {
         ProjectName = "${aws_codebuild_project.codebuild.name}"
       }
     }
+  }
+
+  stage {
+    name = "Provision"
     
     action {
       name        = "ProvisionAppInfrastructure"
