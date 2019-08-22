@@ -9,6 +9,8 @@ phases:
     runtime-versions:
       ruby: "$RUBY_VERSION"
     commands:
+      - apt-get update -y && apt-get install -y unzip
+      - unzip airport_hangout_frontend_source.zip
       - pip3 install awscli --upgrade --user
       - gem install rails
       - bundle update --group test

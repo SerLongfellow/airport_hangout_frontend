@@ -68,17 +68,14 @@ resource "aws_codepipeline" "codepipeline" {
     action {
       name        = "Source"
       category    = "Source"
-      owner       = "ThirdParty"
-      provider    = "GitHub"
+      owner       = "AWS"
+      provider    = "S3"
       version     = "1"
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        Owner                = "SerLongfellow"
-        Repo                 = "airport_hangout_frontend"
-        Branch               = "feature/ci"
-        PollForSourceChanges = "false"
-        OAuthToken           = "${var.github_token}"
+        S3Bucket    = "${module.resources.codepipeline_bucket_output.bucket}"
+        S3ObjectKey = "airport_hangout_frontend_source.zip"
       }
     }
   }
