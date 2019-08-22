@@ -78,7 +78,7 @@ resource "aws_codepipeline" "codepipeline_bootstrap" {
         Repo                 = "airport_hangout_frontend"
         Branch               = "feature/ci"
         PollForSourceChanges = "false"
-        OAuthToken           = "${var.github_token}"
+        OAuthToken           = "${data.aws_kms_secrets.secrets.plaintext["github_token"]}"
       }
     }
   }
@@ -109,7 +109,7 @@ resource "aws_codepipeline_webhook" "codepipeline_bootstrap_webhook" {
 
   authentication = "GITHUB_HMAC"
   authentication_configuration {
-    secret_token = "${var.webhook_secret}"
+    secret_token = "${data.aws_kms_secrets.secrets.plaintext["webhook_secret"]}"
   }
    
   filter {
