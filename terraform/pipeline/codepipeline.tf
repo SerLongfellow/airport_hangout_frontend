@@ -75,7 +75,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         S3Bucket    = "${module.resources.codepipeline_bucket_output.bucket}"
-        S3ObjectKey = "airport_hangout_frontend_source.zip"
+        S3ObjectKey = "airport_hangout_frontend/airport_hangout_frontend_source.zip"
       }
     }
   }
