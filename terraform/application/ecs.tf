@@ -53,7 +53,7 @@ resource "aws_iam_role_policy" "ecs_execution_policy" {
         "ecr:GetAuthorizationToken",
         "ecr:List*"
       ],
-      "Resource": "${aws_ecs_cluster.cluster.arn}"
+      "Resource": "*"
     }
   ]
 }
