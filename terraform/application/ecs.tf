@@ -49,9 +49,14 @@ resource "aws_iam_role_policy" "ecs_execution_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "ecr:Describe*",
         "ecr:GetAuthorizationToken",
-        "ecr:List*"
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:GetRepositoryPolicy",
+        "ecr:DescribeRepositories",
+        "ecr:ListImages",
+        "ecr:DescribeImages",
+        "ecr:BatchGetImage"
       ],
       "Resource": "*"
     }
