@@ -115,4 +115,23 @@ resource "aws_codepipeline" "codepipeline" {
       }
     }
   }
+  
+  stage {
+    name = "Deploy"
+    
+    action {
+      name        = "DeployToTest"
+      category    = "Deploy"
+      owner       = "AWS"
+      provider    = "CodeDeploy"
+      version     = "1"
+      input_artifacts = ["SourceArtifact"]
+      output_artifacts = []
+
+      configuration = {
+        ApplicationName     = "${aws_codedeploy_app.codedeploy_app.name}"
+        DeploymentGroupName = "${aws_codedeploy_group.codedeploy_group.name}"
+      }
+    }
+  }
 }
