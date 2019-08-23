@@ -33,7 +33,7 @@ EOF
 
 resource "aws_iam_role_policy" "codedeploy_policy" {
   name = "airport_hangout_frontend_codedeploy_policy"
-  role = "${aws_iam_role.codeploy_role.id}"
+  role = "${aws_iam_role.codedeploy_role.id}"
 
   policy = <<EOF
 {
