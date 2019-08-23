@@ -130,7 +130,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ApplicationName     = "${aws_codedeploy_app.codedeploy_app.name}"
-        DeploymentGroupName = "${aws_codedeploy_group.codedeploy_group.name}"
+        DeploymentGroupName = "${aws_codedeploy_deployment_group.codedeploy_group.name}"
       }
     }
   }
