@@ -19,4 +19,4 @@ phases:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ]; then exit 1; fi
       - zip -r airport_hangout_frontend_source.zip *
-      - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.pipelines/airport_hangout_frontend/
+      - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.airporthangout.ops/airport_hangout_frontend/
