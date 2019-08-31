@@ -62,8 +62,29 @@ resource "aws_iam_role_policy" "codebuild_infra_policy" {
         {
             "Effect": "Allow",
             "Action": [
+                "elasticloadbalancing:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "iam:*Role*",
                 "iam:*Profile*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "codebuild:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "codedeploy:*"
             ],
             "Resource": "*"
         },
