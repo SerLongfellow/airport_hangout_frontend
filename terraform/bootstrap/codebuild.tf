@@ -99,6 +99,13 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
         {
             "Effect": "Allow",
             "Action": [
+                "elasticloadbalancing:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "iam:GetRole",
                 "iam:CreateRole",
                 "iam:UpdateRole",
@@ -108,7 +115,8 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
                 "iam:CreatePolicy",
                 "iam:DeletePolicy",
                 "iam:PutRolePolicy",
-                "iam:PassRole"
+                "iam:PassRole",
+                "iam:GetInstanceProfile"
             ],
             "Resource": "*"
         }
