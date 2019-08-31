@@ -58,7 +58,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn  = "${aws_iam_role.codepipeline_role.arn}"
   
   artifact_store {
-    location = "${module.resources.codepipeline_bucket_output.bucket}"
+    location = "${var.ops_bucket_name}"
     type     = "S3"
   }
 
