@@ -1,4 +1,4 @@
-FROM ruby:2.6-alpine
+FROM ruby:2.6.3-alpine
 
 ENV WORK_DIR airport-hangout-frontend
 ENV ENVIRONMENT test
