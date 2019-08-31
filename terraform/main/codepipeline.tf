@@ -1,6 +1,6 @@
 
 module "resources" {
-  source = "../resources"
+  source = "./resources"
 }
 
 resource "aws_iam_role" "codepipeline_role" {

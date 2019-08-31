@@ -13,8 +13,8 @@ phases:
       - cd ..
   build:
     commands:
-      - terraform init -no-color terraform/pipeline/
-      - terraform apply -no-color -auto-approve terraform/pipeline/
+      - terraform init -no-color terraform/main/
+      - terraform apply -no-color -auto-approve terraform/main/
   post_build:
     commands:
       - if [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ]; then exit 1; fi

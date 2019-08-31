@@ -3,7 +3,6 @@ resource "aws_ecs_cluster" "cluster" {
   name = "airport_hangout_frontend_cluster"
 }
 
-
 resource "aws_iam_role" "ecs_execution_role" {
   name = "airport_hangout_frontend_ecs_task_execution_role"
 
@@ -95,6 +94,12 @@ resource "aws_ecs_service" "service" {
   launch_type         = "EC2"
   
   deployment_controller {
-    type = "ECS"
+    type = "CODE_DEPLOY"
+  }
+  
+  load_balancer {
+    target_group_arn = "${aws_lb_target_group.lb_target_blue.arn}"
+    container_name   = "frontend"
+    container_port   = 3000
   }
 }
