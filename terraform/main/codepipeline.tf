@@ -41,6 +41,16 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
       ]
     },
     {
+      "Effect":"Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "${var.ops_bucket}",
+        "${var.ops_bucket}/*"
+      ]
+    },
+    {
       "Effect": "Allow",
       "Action": [
         "codebuild:BatchGetBuilds",
