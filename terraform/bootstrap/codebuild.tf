@@ -92,6 +92,13 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
         {
             "Effect": "Allow",
             "Action": [
+                "ecs:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
                 "ec2:*"
             ],
             "Resource": "*"
