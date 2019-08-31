@@ -1,8 +1,4 @@
 
-module "resources" {
-  source = "../resources"
-}
-
 resource "aws_iam_role" "codepipeline_bootstrap_role" {
   name = "codepipeline_bootstrap_role"
 
@@ -36,8 +32,8 @@ resource "aws_iam_role_policy" "codepipeline_bootstrap_policy" {
         "s3:*"
       ],
       "Resource": [
-        "${module.resources.codepipeline_bucket_output.arn}",
-        "${module.resources.codepipeline_bucket_output.arn}/*"
+        "${var.ops_bucket}",
+        "${var.ops_bucket}/*"
       ]
     },
     {
@@ -58,7 +54,7 @@ resource "aws_codepipeline" "codepipeline_bootstrap" {
   role_arn  = "${aws_iam_role.codepipeline_bootstrap_role.arn}"
   
   artifact_store {
-    location = "${module.resources.codepipeline_bucket_output.bucket}"
+    location = "${var.ops_bucket_name}"
     type     = "S3"
   }
 

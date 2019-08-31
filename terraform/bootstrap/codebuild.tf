@@ -34,8 +34,8 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
                 "s3:List*"
             ],
             "Resource": [
-                "${module.resources.codepipeline_bucket_output.arn}", 
-                "${module.resources.codepipeline_bucket_output.arn}/*"
+                "${var.ops_bucket}", 
+                "${var.ops_bucket}/*"
             ]
         },
         {

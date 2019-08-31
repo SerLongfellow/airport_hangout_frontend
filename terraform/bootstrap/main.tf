@@ -5,8 +5,14 @@ provider "aws" {
 
 variable "ops_bucket" {
   type        = string
-  description = "Name of bucket used for terraform state storage - needed to provision CodeBuild infrastructure job permissions"
+  description = "ARN of bucket used for terraform state storage - needed to provision CodeBuild infrastructure job permissions"
   default     = "arn:aws:s3:::com.jefflong.airporthangout.ops"
+}
+
+variable "ops_bucket_name" {
+  type        = string
+  description = "Name of bucket used for terraform state storage - needed to provision CodeBuild infrastructure job permissions"
+  default     = "com.jefflong.airporthangout.ops"
 }
 
 terraform {
