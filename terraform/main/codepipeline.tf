@@ -58,7 +58,7 @@ resource "aws_codepipeline" "codepipeline" {
   role_arn  = "${aws_iam_role.codepipeline_role.arn}"
   
   artifact_store {
-    location = "${var.ops_bucket_name}"
+    location = "${module.resources.codepipeline_bucket_output.bucket}"
     type     = "S3"
   }
 
@@ -74,7 +74,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        S3Bucket    = "${module.resources.codepipeline_bucket_output.bucket}"
+        S3Bucket    = "${var.ops_bucket}"
         S3ObjectKey = "airport_hangout_frontend/airport_hangout_frontend_source.zip"
       }
     }

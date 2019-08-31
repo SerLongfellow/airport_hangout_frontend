@@ -41,15 +41,6 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
         {
             "Effect": "Allow",
             "Action": [
-                "s3:Get*",
-                "s3:Put*",
-                "s3:List*"
-            ],
-            "Resource": ["${var.ops_bucket}", "${var.ops_bucket}/*"]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
                 "s3:*"
             ],
             "Resource": ["*"]
