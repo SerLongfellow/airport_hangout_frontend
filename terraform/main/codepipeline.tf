@@ -108,6 +108,7 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 
+  /*
   stage {
     name = "Provision"
     
@@ -124,7 +125,7 @@ resource "aws_codepipeline" "codepipeline" {
         ProjectName = "${aws_codebuild_project.codebuild_infra.name}"
       }
     }
-  }
+  }*/
   
   stage {
     name = "Deploy"
