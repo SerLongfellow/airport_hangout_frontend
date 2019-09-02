@@ -114,25 +114,6 @@ resource "aws_codepipeline" "codepipeline" {
       }
     }
   }
-
-  /*
-  stage {
-    name = "Provision"
-    
-    action {
-      name        = "ProvisionAppInfrastructure"
-      category    = "Build"
-      owner       = "AWS"
-      provider    = "CodeBuild"
-      version     = "1"
-      input_artifacts = ["SourceArtifact"]
-      output_artifacts = []
-
-      configuration = {
-        ProjectName = "${aws_codebuild_project.codebuild_infra.name}"
-      }
-    }
-  }*/
   
   stage {
     name = "Deploy"
@@ -143,7 +124,7 @@ resource "aws_codepipeline" "codepipeline" {
       owner       = "AWS"
       provider    = "CodeDeploy"
       version     = "1"
-      input_artifacts = ["SourceArtifact"]
+      input_artifacts = []
       output_artifacts = []
 
       configuration = {
