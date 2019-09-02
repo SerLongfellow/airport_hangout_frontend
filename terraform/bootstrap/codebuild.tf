@@ -114,7 +114,7 @@ resource "aws_iam_role_policy" "codebuild_bootstrap_policy" {
                 "iam:DeletePolicy",
                 "iam:PutRolePolicy",
                 "iam:PassRole",
-                "iam:GetInstanceProfile"
+                "iam:*InstanceProfile"
             ],
             "Resource": "*"
         }

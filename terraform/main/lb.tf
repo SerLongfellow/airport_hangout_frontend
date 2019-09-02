@@ -30,7 +30,7 @@ resource "aws_lb" "frontend_lb" {
   subnets            = ["${aws_default_subnet.subnet_az1.id}", "${aws_default_subnet.subnet_az2.id}"]
 
   timeouts {
-    create = "30s"
+    create = "90s"
   }
   
 }
