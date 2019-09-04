@@ -1,3 +1,5 @@
+require 'singleton'
+
 class SessionsRepository < ApplicationRepository
   def fetch_session(session_id)
     raise NoMethodError.new(not_implemented_error)
@@ -9,6 +11,7 @@ class SessionsRepository < ApplicationRepository
 end
 
 class MemorySessionsRepository < SessionsRepository
+  include Singleton
   @@initialized = false
   
   def initialize()
@@ -31,7 +34,7 @@ end
 
 class MemorySessionsRepositoryFactory
   def self.create_sessions_repository
-    MemorySessionsRepository.new
+    MemorySessionsRepository.instance
   end
 end
 

@@ -19,7 +19,7 @@ class MemoryPatronsRepository < PatronsRepository
   
   def initialize()
     require 'repositories/lounges/lounges_repository'
-    @lounge_repo = MemoryLoungesRepository.new
+    @lounge_repo = MemoryLoungesRepositoryFactory.create_lounges_repository
 
     return if @@initialized
 
@@ -80,15 +80,10 @@ class MemoryPatronsRepository < PatronsRepository
   end
   
   def leave_lounge(lounge_id, user)
+    # always excludes user from patrons list
     lounge_patrons = fetch_many(lounge_id, user.id)
 
     if !lounge_patrons.nil?
-      lounge_patrons = lounge_patrons.reject! {|patron| patron.id == user.id}
-
-      if lounge_patrons.nil?
-        return false
-      end
-      
       @lounge_repo.update_patron_count(lounge_id, -1)
       @@lounge_patrons[lounge_id.to_i - 1] = lounge_patrons
 
@@ -101,6 +96,6 @@ end
 
 class MemoryPatronsRepositoryFactory
   def self.create_patrons_repository
-    MemoryPatronsRepository.new
+    MemoryPatronsRepository.instance
   end
 end

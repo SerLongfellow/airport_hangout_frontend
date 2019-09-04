@@ -1,4 +1,6 @@
 class UsersRepository < ApplicationRepository
+  include Singleton
+  
   def fetch_user(user_id)
     raise NoMethodError.new(not_implemented_error)
   end
@@ -9,11 +11,14 @@ class UsersRepository < ApplicationRepository
 end
 
 class MemoryUsersRepository < UsersRepository
+
   @@initialized = false
   
-  def initialize()
-    super()
+  def initialize
+    super
     return if @@initialized
+
+    puts("Initializing users repo")
 
     @@users = {}
     @@users["1"] = User.new("1", "Billy Bob", "Little Rock, AR", "1")
@@ -47,6 +52,6 @@ end
 
 class MemoryUsersRepositoryFactory
   def self.create_users_repository
-    MemoryUsersRepository.new
+    MemoryUsersRepository.instance
   end
 end

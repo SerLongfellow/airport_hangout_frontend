@@ -16,7 +16,7 @@ class ConversationChannel < ApplicationCable::Channel
     message_text = message['text']
     conversation_id = message['conversationId']
 
-    conversations_repo = MemoryConversationsRepository.new
+    conversations_repo = MemoryConversationsRepositoryFactory.create_conversations_repository
     conversation = conversations_repo.fetch_by_id(conversation_id)  # fetch to make sure it exists
 
     message = Message.new(SecureRandom.uuid, conversation_id, message_text, current_user.id, current_user.name)
@@ -27,7 +27,7 @@ class ConversationChannel < ApplicationCable::Channel
     ActionCable.server.broadcast("conversation_channel_user_#{current_user.id}", message: rendered)
     
     # Then, broadcast to the other conversation partner's connection
-    users_repo = MemoryUsersRepository.new
+    users_repo = MemoryUsersRepositoryFactory.create_users_repository
 
     remote_party_id = conversation.recipient_id
     if remote_party_id == current_user.id

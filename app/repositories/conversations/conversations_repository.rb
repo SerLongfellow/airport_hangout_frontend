@@ -66,6 +66,6 @@ end
 
 class MemoryConversationsRepositoryFactory
   def self.create_conversations_repository
-    MemoryConversationsRepository.new
+    MemoryConversationsRepository.instance
   end
 end
