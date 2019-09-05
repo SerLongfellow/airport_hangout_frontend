@@ -1,6 +1,7 @@
-
+require 'singleton'
 
 class ApplicationRepository
+  include Singleton
   require_relative '../errors/application_errors'
 
   def not_implemented_error()

@@ -33,6 +33,6 @@ end
 
 class MemoryAirportsRepositoryFactory
   def self.create_airports_repository
-    MemoryAirportsRepository.new
+    MemoryAirportsRepository.instance
   end
 end

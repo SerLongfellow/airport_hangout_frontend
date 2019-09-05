@@ -20,7 +20,7 @@ class MemoryLoungesRepository < LoungesRepository
     return if @@initialized
 
     require 'repositories/airports/airports_repository'
-    airports_repo = MemoryAirportsRepository.new
+    airports_repo = MemoryAirportsRepositoryFactory.create_airports_repository
 
     @@airports = {}
     @@lounges = {}
@@ -83,6 +83,6 @@ end
 
 class MemoryLoungesRepositoryFactory
   def self.create_lounges_repository
-    MemoryLoungesRepository.new
+    MemoryLoungesRepository.instance
   end
 end

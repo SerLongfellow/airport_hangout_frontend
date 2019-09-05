@@ -17,7 +17,7 @@ module ApplicationCable
         session_id = cookies.encrypted[:session_id]
         reject_unauthorized_connection if session_id.nil?
         
-        sessions_repo = MemorySessionsRepository.new
+        sessions_repo = MemorySessionsRepositoryFactory.create_sessions_repository
         user = sessions_repo.fetch_by_id(session_id).current_user
         return user
       rescue NotFoundError => e
