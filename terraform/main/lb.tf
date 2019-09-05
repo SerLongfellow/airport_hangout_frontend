@@ -8,6 +8,12 @@ resource "aws_security_group" "lb_security_group" {
     to_port   = "3000"
     protocol  = "tcp"
   }
+  
+  ingress {
+    from_port = "8080"
+    to_port   = "3000"
+    protocol  = "tcp"
+  }
 }
 
 resource "aws_default_vpc" "default_vpc" {
@@ -30,7 +36,7 @@ resource "aws_lb" "frontend_lb" {
   subnets            = ["${aws_default_subnet.subnet_az1.id}", "${aws_default_subnet.subnet_az2.id}"]
 
   timeouts {
-    create = "120s"
+    create = "10m"
   }
   
 }
@@ -57,5 +63,16 @@ resource "aws_lb_listener" "frontend_lb_listener" {
   default_action {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.lb_target_blue.arn}"
+  }
+}
+
+resource "aws_lb_listener" "frontend_lb_listener_secondary" {
+  load_balancer_arn = "${aws_lb.frontend_lb.arn}"
+  port              = "8080"
+  protocol          = "HTTP"
+  
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.lb_target_green.arn}"
   }
 }

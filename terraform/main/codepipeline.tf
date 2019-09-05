@@ -124,7 +124,7 @@ resource "aws_codepipeline" "codepipeline" {
       owner       = "AWS"
       provider    = "CodeDeploy"
       version     = "1"
-      input_artifacts = []
+      input_artifacts = ["BuildArtifact"]
       output_artifacts = []
 
       configuration = {
