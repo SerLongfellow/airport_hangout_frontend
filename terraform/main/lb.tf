@@ -46,6 +46,8 @@ resource "aws_lb_target_group" "lb_target_blue" {
   port       = 3000
   protocol   = "HTTP"
   vpc_id     = "${aws_default_vpc.default_vpc.id}"
+  
+  depends_on = ["aws_lb.frontend_lb"]
 }
 
 resource "aws_lb_target_group" "lb_target_green" {
@@ -53,6 +55,8 @@ resource "aws_lb_target_group" "lb_target_green" {
   port       = 3000
   protocol   = "HTTP"
   vpc_id     = "${aws_default_vpc.default_vpc.id}"
+  
+  depends_on = ["aws_lb.frontend_lb"]
 }
 
 resource "aws_lb_listener" "frontend_lb_listener" {
