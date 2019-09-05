@@ -24,7 +24,7 @@ resource "aws_default_subnet" "subnet_az2" {
 
 resource "aws_lb" "frontend_lb" {
   name               = "airport-hangout-frontend-lb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.lb_security_group.id}"]
   subnets            = ["${aws_default_subnet.subnet_az1.id}", "${aws_default_subnet.subnet_az2.id}"]
