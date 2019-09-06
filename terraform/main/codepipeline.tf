@@ -67,10 +67,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     },
     {
       "Action": [
-        "ecs:DescribeServices",
-        "ecs:CreateTaskSet",
-        "ecs:UpdateServicePrimaryTaskSet",
-        "ecs:DeleteTaskSet",
+        "ecs:*",
         "elasticloadbalancing:DescribeTargetGroups",
         "elasticloadbalancing:DescribeListeners",
         "elasticloadbalancing:ModifyListener",
