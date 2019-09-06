@@ -33,6 +33,6 @@ phases:
       - docker tag $IMAGE_NAME $TAGGED_URI_LATEST
       - docker push $TAGGED_URI
       - docker push $TAGGED_URI_LATEST
-      - printf '[{"name":"frontend", "imageUri":"%S"}]' $TAGGED_URI > imagedefinitions.json
+      - printf '[{"name":"frontend", "imageUri":"%s"}]' $TAGGED_URI > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
