@@ -54,9 +54,8 @@ resource "aws_iam_role_policy" "codedeploy_policy" {
                 "lambda:InvokeFunction",
                 "cloudwatch:DescribeAlarms",
                 "sns:Publish",
-                "s3:GetObject",
-                "s3:GetObjectMetadata",
-                "s3:GetObjectVersion"
+                "s3:Get*",
+                "s3:List*"
             ],
             "Resource": "*",
             "Effect": "Allow"
