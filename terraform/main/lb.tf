@@ -16,8 +16,8 @@ resource "aws_security_group_rule" "lb_inbound_rule" {
 
 resource "aws_security_group_rule" "lb_outbound_rule" {
   type         = "egress"
-  from_port    = 3000
-  to_port      = 3000
+  from_port    = 32768
+  to_port      = 65535
   protocol     = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
  
@@ -49,20 +49,11 @@ resource "aws_lb" "frontend_lb" {
   
 }
 
-resource "aws_lb_target_group" "lb_target_blue" {
+resource "aws_lb_target_group" "lb_target" {
   name       = "frontend-lb-target-blue"
   port       = 3000
   protocol   = "HTTP"
   vpc_id     = "${aws_default_vpc.default_vpc.id}"
-  
-  depends_on = ["aws_lb.frontend_lb"]
-}
-
-resource "aws_lb_target_group" "lb_target_green" {
-  name        = "frontend-lb-target-green"
-  port        = 3000
-  protocol    = "HTTP"
-  vpc_id      = "${aws_default_vpc.default_vpc.id}"
   
   depends_on = ["aws_lb.frontend_lb"]
 }
@@ -74,17 +65,6 @@ resource "aws_lb_listener" "frontend_lb_listener" {
   
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.lb_target_blue.arn}"
-  }
-}
-
-resource "aws_lb_listener" "frontend_lb_listener_secondary" {
-  load_balancer_arn = "${aws_lb.frontend_lb.arn}"
-  port              = "8080"
-  protocol          = "HTTP"
-  
-  default_action {
-    type             = "forward"
-    target_group_arn = "${aws_lb_target_group.lb_target_green.arn}"
+    target_group_arn = "${aws_lb_target_group.lb_target.arn}"
   }
 }

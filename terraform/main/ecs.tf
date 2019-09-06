@@ -76,7 +76,6 @@ resource "aws_ecs_task_definition" "task" {
     "portMappings": [
       {
         "containerPort": 3000,
-        "hostPort": 80,
         "protocol": "tcp"
       }
     ]
@@ -98,7 +97,7 @@ resource "aws_ecs_service" "service" {
   }
   
   load_balancer {
-    target_group_arn = "${aws_lb_target_group.lb_target_blue.arn}"
+    target_group_arn = "${aws_lb_target_group.lb_target.arn}"
     container_name   = "frontend"
     container_port   = 3000
   }
