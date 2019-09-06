@@ -5,12 +5,18 @@ resource "aws_security_group" "lb_security_group" {
   
   ingress {
     from_port = "80"
-    to_port   = "3000"
+    to_port   = "80"
     protocol  = "tcp"
   }
   
   ingress {
     from_port = "8080"
+    to_port   = "8080"
+    protocol  = "tcp"
+  }
+
+  egress {
+    from_port = "3000"
     to_port   = "3000"
     protocol  = "tcp"
   }

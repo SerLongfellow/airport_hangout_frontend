@@ -94,7 +94,7 @@ resource "aws_ecs_service" "service" {
   launch_type         = "EC2"
   
   deployment_controller {
-    type = "CODE_DEPLOY"
+    type = "ECS"
   }
   
   load_balancer {
