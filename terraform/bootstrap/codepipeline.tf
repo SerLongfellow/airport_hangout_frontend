@@ -72,7 +72,7 @@ resource "aws_codepipeline" "codepipeline_bootstrap" {
       configuration = {
         Owner                = "SerLongfellow"
         Repo                 = "airport_hangout_frontend"
-        Branch               = "feature/ci"
+        Branch               = "development"
         PollForSourceChanges = "false"
         OAuthToken           = "${data.aws_kms_secrets.secrets.plaintext["github_token"]}"
       }

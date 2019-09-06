@@ -64,6 +64,40 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "codedeploy:*"
       ],
       "Resource": "*"
+    },
+    {
+      "Action": [
+        "ecs:DescribeServices",
+        "ecs:CreateTaskSet",
+        "ecs:UpdateServicePrimaryTaskSet",
+        "ecs:DeleteTaskSet",
+        "elasticloadbalancing:DescribeTargetGroups",
+        "elasticloadbalancing:DescribeListeners",
+        "elasticloadbalancing:ModifyListener",
+        "elasticloadbalancing:DescribeRules",
+        "elasticloadbalancing:ModifyRule",
+        "lambda:InvokeFunction",
+        "cloudwatch:DescribeAlarms",
+        "sns:Publish",
+        "s3:Get*",
+        "s3:List*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Condition": {
+        "StringLike": {
+          "iam:PassedToService": [
+            "ecs-tasks.amazonaws.com"
+          ]
+        }
+      }
     }
   ]
 }
@@ -119,17 +153,18 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Deploy"
     
     action {
-      name        = "DeployToTest"
+      name        = "Deploy"
       category    = "Deploy"
       owner       = "AWS"
-      provider    = "CodeDeploy"
+      provider    = "ECS"
       version     = "1"
       input_artifacts = ["BuildArtifact"]
       output_artifacts = []
 
       configuration = {
-        ApplicationName     = "${aws_codedeploy_app.codedeploy_app.name}"
-        DeploymentGroupName = "${aws_codedeploy_deployment_group.codedeploy_group.deployment_group_name}"
+        ClusterName="airport_hangout_frontend_cluster"
+        ServiceName="airport_hangout_frontend_service"
+        FileName="imagedefinitions.json"
       }
     }
   }
