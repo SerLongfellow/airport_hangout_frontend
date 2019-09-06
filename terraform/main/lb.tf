@@ -9,7 +9,7 @@ resource "aws_security_group_rule" "lb_inbound_rule" {
   from_port    = 80
   to_port      = 80
   protocol     = "tcp"
-  cidr_blocks = "0.0.0.0/0"
+  cidr_blocks = ["0.0.0.0/0"]
  
   security_group_id = "${aws_security_group.lb_security_group.id}"
 }
@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "lb_outbound_rule" {
   from_port    = 3000
   to_port      = 3000
   protocol     = "tcp"
-  cidr_blocks = "0.0.0.0/0"
+  cidr_blocks = ["0.0.0.0/0"]
  
   security_group_id = "${aws_security_group.lb_security_group.id}"
 }
