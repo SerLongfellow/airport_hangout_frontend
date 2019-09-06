@@ -52,15 +52,17 @@ resource "aws_lb_target_group" "lb_target_blue" {
   port       = 3000
   protocol   = "HTTP"
   vpc_id     = "${aws_default_vpc.default_vpc.id}"
+  cidr_blocks = "0.0.0.0/0"
   
   depends_on = ["aws_lb.frontend_lb"]
 }
 
 resource "aws_lb_target_group" "lb_target_green" {
-  name       = "frontend-lb-target-green"
-  port       = 3000
-  protocol   = "HTTP"
-  vpc_id     = "${aws_default_vpc.default_vpc.id}"
+  name        = "frontend-lb-target-green"
+  port        = 3000
+  protocol    = "HTTP"
+  vpc_id      = "${aws_default_vpc.default_vpc.id}"
+  cidr_blocks = "0.0.0.0/0"
   
   depends_on = ["aws_lb.frontend_lb"]
 }
