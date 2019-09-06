@@ -2,24 +2,24 @@
 resource "aws_security_group" "lb_security_group" {
   name             = "airport_hangout_frontend_lb_sg"
   description      = "Airport Hangout frontend load balancer SG"
-  
-  ingress {
-    from_port = "80"
-    to_port   = "80"
-    protocol  = "tcp"
-  }
-  
-  ingress {
-    from_port = "8080"
-    to_port   = "8080"
-    protocol  = "tcp"
-  }
+}
 
-  egress {
-    from_port = "3000"
-    to_port   = "3000"
-    protocol  = "tcp"
-  }
+resource "aws_security_group_rule" "lb_inbound_rule" {
+  type         = "ingress"
+  from_port    = 80
+  to_port      = 80
+  protocol     = "tcp"
+ 
+  security_group_id = "${aws_security_group.lb_security_group.id}"
+}
+
+resource "aws_security_group_rule" "lb_outbound_rule" {
+  type         = "egress"
+  from_port    = 3000
+  to_port      = 3000
+  protocol     = "tcp"
+ 
+  security_group_id = "${aws_security_group.lb_security_group.id}"
 }
 
 resource "aws_default_vpc" "default_vpc" {

@@ -60,7 +60,7 @@ resource "aws_iam_instance_profile" "ecs" {
 
 resource "aws_instance" "ecs_cluster_instance" {
   ami                  = "ami-0fac5486e4cff37f4"
-  instance_type        = "t2.micro"
+  instance_type        = "t2.small"
   key_name             = "${aws_key_pair.ec2.key_name}"
   iam_instance_profile = "${aws_iam_instance_profile.ecs.name}"
   
