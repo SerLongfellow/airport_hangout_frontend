@@ -55,6 +55,10 @@ resource "aws_lb_target_group" "lb_target" {
   protocol   = "HTTP"
   vpc_id     = "${aws_default_vpc.default_vpc.id}"
   
+  health_check {
+    path = "/health_check"
+  }
+  
   depends_on = ["aws_lb.frontend_lb"]
 }
 
