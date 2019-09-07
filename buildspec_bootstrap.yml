@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+    commands:
+      - apt-get update -y && apt-get install zip
+      - cd tmp
+      - wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip
+      - unzip -o terraform_0.12.6_linux_amd64.zip
+      - mv terraform /usr/bin/
+      - cd ..
+  build:
+    commands:
+      - terraform init -no-color terraform/main/
+      - terraform apply -no-color -auto-approve terraform/main/
+  post_build:
+    commands:
+      - if [ "$CODEBUILD_BUILD_SUCCEEDING" = '0' ]; then exit 1; fi
+      - zip -r airport_hangout_frontend_source.zip *
+      - aws s3 cp airport_hangout_frontend_source.zip s3://com.jefflong.airporthangout.ops/airport_hangout_frontend/

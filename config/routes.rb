@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'home/index'
+  get 'health_check', to: 'health_check#status'
   
   resources :sessions, only: [:new, :create]
 

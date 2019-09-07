@@ -1,3 +1,5 @@
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidXR6VkpScHFRK0VTZ2dxcW9TRVA4Z0ljdVpvSFpmVFh6M3dVY083eUNuU21YZzZMM2J0Q0wvL20zVmtQc09iZ1QvYjhsYy8yWGhUNld5TEY4VTltdHk4PSIsIml2UGFyYW1ldGVyU3BlYyI6InZ5KzAyT2pzMHhvNVl3ZzgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
 # Airport Hangout Frontend
 
 This is still a work in progress. To be the frontend "web" component of the AirportHangout system.
