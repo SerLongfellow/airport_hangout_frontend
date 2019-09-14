@@ -51,7 +51,13 @@ class MemoryUsersRepository < UsersRepository
 end
 
 class MemoryUsersRepositoryFactory
-  def self.create_users_repository
+  def self.create_repository
     MemoryUsersRepository.instance
+  end
+end
+
+class UsersRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :users
   end
 end

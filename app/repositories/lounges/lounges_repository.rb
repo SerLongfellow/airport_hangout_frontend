@@ -19,8 +19,7 @@ class MemoryLoungesRepository < LoungesRepository
   def initialize()
     return if @@initialized
 
-    require 'repositories/airports/airports_repository'
-    airports_repo = MemoryAirportsRepositoryFactory.create_airports_repository
+    airports_repo = MemoryAirportsRepositoryFactory.create_repository
 
     @@airports = {}
     @@lounges = {}
@@ -82,7 +81,13 @@ class MemoryLoungesRepository < LoungesRepository
 end
 
 class MemoryLoungesRepositoryFactory
-  def self.create_lounges_repository
+  def self.create_repository
     MemoryLoungesRepository.instance
+  end
+end
+
+class LoungesRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :lounges
   end
 end

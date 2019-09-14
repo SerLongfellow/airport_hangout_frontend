@@ -32,7 +32,13 @@ class MemoryAirportsRepository < AirportsRepository
 end
 
 class MemoryAirportsRepositoryFactory
-  def self.create_airports_repository
+  def self.create_repository
     MemoryAirportsRepository.instance
+  end
+end
+
+class AirportsRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :airports
   end
 end

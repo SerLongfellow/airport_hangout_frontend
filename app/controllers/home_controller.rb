@@ -1,4 +1,3 @@
-require 'repositories/sessions/sessions_repository'
 
 class HomeController < ApplicationController
   def index()

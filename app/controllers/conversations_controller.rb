@@ -2,32 +2,32 @@
 class ConversationsController < ApplicationController
   def index
     @current_user = @session.current_user
-    @conversations = create_conversations_repository.fetch_many(@session.current_user.id)
+    @conversations = ConversationsRepositoryFactory.create_repository.fetch_many(@session.current_user.id)
   end
 
   def show
     @current_user = @session.current_user
-    @conversation = create_conversations_repository.fetch_by_id(params[:id])
+    @conversation = ConversationsRepositoryFactory.create_repository.fetch_by_id(params[:id])
     remote_party_id = @conversation.recipient_id
 
-    if remote_party_id == @current_user
+    if remote_party_id == @current_user.id
       remote_party_id = @conversation.sender_id
     end
       
-    @remote_party = create_users_repository.fetch_user(remote_party_id)
+    @remote_party = UsersRepositoryFactory.create_repository.fetch_user(remote_party_id)
   end
 
   def create
     patron_id = params[:patron_id]
 
     begin
-      patron = create_users_repository.fetch_user(patron_id)
+      patron = UsersRepositoryFactory.create_repository.fetch_user(patron_id)
     rescue NotFoundError => e
       render_400("No patron found with ID #{patron_id}")
       return
     end
 
-    conversations_repo = create_conversations_repository
+    conversations_repo = ConversationsRepositoryFactory.create_repository
 
     begin
       conversation = conversations_repo.fetch_by_participant_ids(@session.current_user.id, patron.id)

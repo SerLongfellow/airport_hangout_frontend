@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     redirect_to_new_session and return if session_id.nil?
    
     begin
-      @session = create_sessions_repository.fetch_by_id(session_id)
+      @session = SessionsRepositoryFactory.create_repository.fetch_by_id(session_id)
     rescue NotFoundError => e
       redirect_to_new_session
     end

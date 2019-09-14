@@ -65,7 +65,13 @@ class MemoryConversationsRepository < ConversationsRepository
 end
 
 class MemoryConversationsRepositoryFactory
-  def self.create_conversations_repository
+  def self.create_repository
     MemoryConversationsRepository.instance
+  end
+end
+
+class ConversationsRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :conversations
   end
 end

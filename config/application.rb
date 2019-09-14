@@ -18,13 +18,14 @@ module AirportHangoutFrontend
     # Add app to load path to get our custom "non-MVC" code
     config.autoload_paths += %W(#{config.root}/app/)
     config.autoload_paths += %W(#{config.root}/app/errors/)
+    config.autoload_paths += %W(#{config.root}/app/repositories/)
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     
-    config.generators.javascript_engine = :js    
+    config.generators.javascript_engine = :js
     config.session_store = :disabled
   end
 end

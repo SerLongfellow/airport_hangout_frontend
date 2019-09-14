@@ -19,7 +19,7 @@ class MemoryPatronsRepository < PatronsRepository
   
   def initialize()
     require 'repositories/lounges/lounges_repository'
-    @lounge_repo = MemoryLoungesRepositoryFactory.create_lounges_repository
+    @lounge_repo = MemoryLoungesRepositoryFactory.create_repository
 
     return if @@initialized
 
@@ -95,7 +95,13 @@ class MemoryPatronsRepository < PatronsRepository
 end
 
 class MemoryPatronsRepositoryFactory
-  def self.create_patrons_repository
+  def self.create_repository
     MemoryPatronsRepository.instance
+  end
+end
+
+class PatronsRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :patrons
   end
 end

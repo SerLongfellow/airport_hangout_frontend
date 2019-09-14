@@ -33,8 +33,13 @@ class MemorySessionsRepository < SessionsRepository
 end
 
 class MemorySessionsRepositoryFactory
-  def self.create_sessions_repository
+  def self.create_repository
     MemorySessionsRepository.instance
   end
 end
 
+class SessionsRepositoryFactory < ApplicationRepositoryFactory
+  def self.repo_type
+    :sessions
+  end
+end
