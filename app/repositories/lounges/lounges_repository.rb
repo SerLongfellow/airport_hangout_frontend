@@ -2,81 +2,71 @@ class LoungesRepository < ApplicationRepository
   def fetch_many()
     raise NoMethodError.new(not_implemented_error)
   end
-  
+
   def fetch_by_id(id)
     raise NoMethodError.new(not_implemented_error)
   end
-  
+
   def update_patron_count(id, inc)
+    raise NoMethodError.new(not_implemented_error)
+  end
+
+  def create(lounge)
     raise NoMethodError.new(not_implemented_error)
   end
 end
 
 class MemoryLoungesRepository < LoungesRepository
-
   @@initialized = false
-  
-  def initialize()
+
+  def initialize
     return if @@initialized
 
-    airports_repo = MemoryAirportsRepositoryFactory.create_repository
+    @@lounges = []
 
-    @@airports = {}
-    @@lounges = {}
+    if ENV['RAILS_ENV'] == 'development'
+      lounge = Lounge.new('1', 'Cool-Ass Playas Lounge', '1', 'Where all the cool kids come to play...', number_of_patrons=2)
+      @@lounges.push(lounge)
 
-    airport = airports_repo.fetch_by_id(1)
-    
-    lounge_list = []
-    lounge = Lounge.new("1", "Cool-Ass Playas Lounge", airport, description="Where all the cool kids come to play...", number_of_patrons=2)
-    lounge_list.push(lounge)
-    @@lounges[lounge.id] = lounge
+      lounge = Lounge.new('2', 'I Want My IPA Lounge', '1', 'Over 9,000 IBU\'s!')
+      @@lounges.push(lounge)
 
-    lounge = Lounge.new("2", "I Want My IPA Lounge", airport, description="Over 9,000 IBU's!")
-    lounge_list.push(lounge)
-    @@lounges[lounge.id] = lounge
-    
-    lounge = Lounge.new("3", "Delta Premium Lounge", airport, description="We're Delta...")
-    lounge_list.push(lounge)
-    @@lounges[lounge.id] = lounge
+      lounge = Lounge.new('3', 'Delta Premium Lounge', '1', 'We\'re Delta...')
+      @@lounges.push(lounge)
 
-    @@airports["1"] = lounge_list
-
-    airport = airports_repo.fetch_by_id(2)
-    
-    lounge_list = []
-    lounge = Lounge.new("4", "Whole Hog Barbeque", airport, description="Getcha some grub!")
-    lounge_list.push(lounge)
-    @@lounges[lounge.id] = lounge
-    
-    @@airports["2"] = lounge_list
+      lounge = Lounge.new('4', 'Whole Hog Barbeque', '2', description='Getcha some grub!')
+      @@lounges.push(lounge)
+    end
 
     @@initialized = true
   end
 
   def fetch_many(airport_id)
-    if @@airports.key?(airport_id)
-      return @@airports[airport_id]
-    else
-      raise NotFoundError.new("No airport with ID " + airport_id)
-    end
+    result = @@lounges.select { |lounge| lounge.airport_id == airport_id }
+    return result unless result.nil?
   end
-  
+
   def fetch_by_id(lounge_id)
-    res = @@lounges[lounge_id]
-    raise NotFoundError.new("No lounge with ID " + lounge_id) if res.nil?
-  
-    return res
+    result = @@lounges.find { |lounge| lounge.id == lounge_id }
+    return result unless result.nil?
+
+    raise NotFoundError, 'No lounge with ID ' + lounge_id
   end
-  
+
   def update_patron_count(lounge_id, inc)
     lounge = fetch_by_id(lounge_id)
-
-    if lounge.nil?
-      return false
-    end
+    return false if lounge.nil?
 
     lounge.number_of_patrons += inc
-    return lounge
+    lounge
+  end
+
+  def create(lounge)
+    @@lounges.push(lounge)
+  end
+
+  def reset
+    @@lounges = []
   end
 end
 

@@ -1,7 +1,7 @@
 
 <h2><%= @lounge.name %></h2>
 
-<p><%= link_to "Back to Lounges...", airport_lounges_path(@lounge.airport.id) %></p>
+<p><%= link_to "Back to Lounges...", airport_lounges_path(@lounge.airport_id) %></p>
 
 <p><%= @lounge.description %></p>
 <p>Current Patrons: <%= @lounge.number_of_patrons %></p>
@@ -43,7 +43,4 @@
   });
 </script>
 
-<h3>Airport</h3>
-<p><%= @lounge.airport.name %></p>
-<p><%= @lounge.airport.code %></p>
 
